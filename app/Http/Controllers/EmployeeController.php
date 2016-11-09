@@ -7,6 +7,7 @@ use App\User;
 use App\UserRole;
 use App\Role;
 use App\Shift_employee;
+use App\Work_time;
 use App\Http\Requests\EmployeeStoreRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
@@ -92,9 +93,10 @@ class EmployeeController extends Controller {
 		} else {
 			$user_role = UserRole::where('user_id','=',$id)->first();
 			$roles = Role::all();
+      $work_times = Work_time::all();
 			$shift_employees = Shift_employee::all();
 			$shift_user = Shift_employee::where('user_id','=',$id)->get();
-			return view('settings.employee.view', compact('employee',$employee,'user_role',$user_role,'roles',$roles,'shift_user',$shift_user));
+			return view('settings.employee.view', compact('employee',$employee,'user_role',$user_role,'roles',$roles,'shift_user',$shift_user,'work_times',$work_times));
 		}
 	}
 

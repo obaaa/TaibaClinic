@@ -10,6 +10,7 @@
 
 				<div class="panel-body">
 				<a class="btn btn-small btn-success" href="{{ URL::to('employees/create') }}">New Employee</a>
+				<a class="btn btn-small btn-success" href="{{ URL::to('create_employee_work_time') }}">New Employee work time</a>
 				<hr />
 @if (Session::has('message'))
 	<p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>

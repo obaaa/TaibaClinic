@@ -61,12 +61,38 @@
     </div>
 </div>
  {{--  --}}
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-warning">
 				<div class="panel-heading">Shift</div>
 				<div class="panel-body">
+          {!! Form::open(array('url' => 'employee_work_time')) !!}
+					{{--  --}}
+					<div class="form-group">
+					{!! Form::label('work_times', trans('add work time').' *') !!}
+						<select id="work_time_id" name="work_time_id" class="form-control border-input">
+							@foreach($work_times as $value)
+								<option value="{{ $value->id }}">
+                  {{App\Day::find($value->day_id)->day_name}} -
+                  {{App\Shift::find($value->shift_id)->shift_name}} - [
+                  {{App\Divisions_time::find($value->divisions_times_start_id)->time}} to
+                  {{App\Divisions_time::find($value->divisions_times_end_id)->time}} ]
+                </option>
+							@endforeach
+						</select>
+					</div>
+
+          {{ $employee->id }}
+          {{ Form::hidden('user_id', $employee->id) }}
+
+					{{--  --}}
+					<div class="text-center">
+					{!! Form::submit(trans('add'), array('class' => 'btn btn-info btn-fill btn-wd')) !!}
+					</div>
+					{!! Form::close() !!}<br>
+
 <table class="table table-striped table-bordered">
     <thead>
         <tr>

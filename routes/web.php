@@ -35,6 +35,9 @@ Route::resource("checkeds", "CheckedController");
 Route::resource("divisions_time", "Divisions_timeController");
 
 Route::resource("work_times", "Work_timeController");
+Route::post('employee_work_time','Work_timeController@employee_work_time');
+
+
 
 Route::resource("shift_employees", "Shift_employeeController");
 

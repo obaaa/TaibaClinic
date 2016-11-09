@@ -10,4 +10,9 @@ class Work_time extends Model
   {
   return $this->hasMany('App\Shift_employee');
   }
+
+  public function Employee_work_time()
+  {
+  return $this->hasMany('App\Employee_work_time');
+  }
 }
