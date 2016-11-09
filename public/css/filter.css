@@ -1,0 +1,13 @@
+.light-table-filter {
+  margin-bottom: 5px;
+  padding: 3px;
+  border: solid 1px #E4E4E4;
+  border-radius: 6px;
+  background-color: #fff;
+  width: 90%;
+  height: 40px;
+}
+table.members_details { width: 90%; 	border-collapse: collapse; 	}
+.members_details tr:nth-of-type(odd) { background: #eee; }
+.members_details th { background: #7a9e9f; color: white; font-weight: bold; }
+.members_details td, .members_details th {padding: 6px; border: 1px solid #ccc;text-align: left;}
