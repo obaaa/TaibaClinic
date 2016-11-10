@@ -68,58 +68,62 @@
 			<div class="panel panel-warning">
 				<div class="panel-heading">Shift</div>
 				<div class="panel-body">
+
+
           {!! Form::open(array('url' => 'employee_work_time')) !!}
-					{{--  --}}
-					<div class="form-group">
-					{!! Form::label('work_times', trans('add work time').' *') !!}
-						<select id="work_time_id" name="work_time_id" class="form-control border-input">
-							@foreach($work_times as $value)
-								<option value="{{ $value->id }}">
-                  {{App\Day::find($value->day_id)->day_name}} -
-                  {{App\Shift::find($value->shift_id)->shift_name}} - [
-                  {{App\Divisions_time::find($value->divisions_times_start_id)->time}} to
-                  {{App\Divisions_time::find($value->divisions_times_end_id)->time}} ]
-                </option>
-							@endforeach
-						</select>
-					</div>
+                {!! csrf_field() !!}
+          <table class="table table-striped table-bordered">
+              <thead>
+                  <tr>
+                      <td>No</td>
+          						<td>day</td>
+          						<td>shift</td>
+          						<td>start</td>
+          						<td>end</td>
+                      <td>&nbsp;</td>
+                  </tr>
+              </thead>
+              <tbody>
+          			<?php $i = 1; ?>
+              @foreach($work_times as $value)
+                  <tr>
+                      <td>{{ $i }}</td>
+          						<td>{{App\Day::find($value->day_id)->day_name}}</td>
+          						<td>{{App\Shift::find($value->shift_id)->shift_name}}</td>
+          						<td>{{App\Divisions_time::find($value->divisions_times_start_id)->time}}</td>
+          						<td>{{App\Divisions_time::find($value->divisions_times_end_id)->time}}</td>
+                      <td>
 
-          {{ $employee->id }}
-          {{ Form::hidden('user_id', $employee->id) }}
+                        <input type="hidden" value="{{$value->id}}" name="work_time_id[]">
 
-					{{--  --}}
-					<div class="text-center">
-					{!! Form::submit(trans('add'), array('class' => 'btn btn-info btn-fill btn-wd')) !!}
-					</div>
-					{!! Form::close() !!}<br>
+                        <select class="form-control" name="check[]">
+                          <?php
+                            $employee_work_time = App\Employee_work_time::where('user_id','=',$employee->id)->where('work_time_id','=',$value->id)->first();
+                            if (!empty($employee_work_time)) {
+                              // echo "<option value="1">Yes</option><option value="0">NO</option>";
+                              echo ('<option value="1">Yes</option>');
+                              echo ('<option value="0">No</option>');
+                            }else {
+                              echo ('<option value="0">No</option>');
+                              echo ('<option value="1">Yes</option>');
+                            }
+                          ?>
+                        </select>
+                      </td>
+                  </tr><?php $i++; ?>
+              @endforeach
 
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <td>id</td>
-            <td>name</td>
-						<td>phone</td>
-						<td>role</td>
-						<td>email</td>
-            <td>&nbsp;</td>
-        </tr>
-    </thead>
-    <tbody>
-    {{-- @foreach($employees as $value) --}}
-        <tr>
-            <td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>4</td>
-						<td>5</td>
-            <td>6</td>
-        </tr>
-    {{-- @endforeach --}}
-    </tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
+              <input type="hidden" value="{{$employee->id}}" name="user_id">
+
+              </tbody>
+          </table>
+          <div class="text-center">
+          {!! Form::submit(trans('update'), array('class' => 'btn btn-info btn-fill btn-wd')) !!}
+          </div>
+          {!! Form::close() !!}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection
