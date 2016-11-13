@@ -15,4 +15,10 @@ class Work_time extends Model
   {
   return $this->hasMany('App\Employee_work_time');
   }
+
+  public function Visit()
+  {
+  return $this->hasMany('App\Visit');
+  }
+  
 }

@@ -310,6 +310,7 @@ class ComposerStaticInit6f6a485f5cad68ca455dd7c04c1976c9
     );
 
     public static $classMap = array (
+        'CreateAddVisitsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_12_125337_create_add_visits_table.php',
         'CreateCheckedsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_21_081956_create_checkeds_table.php',
         'CreateDaysTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_21_122409_create_days_table.php',
         'CreateDivisionsTimesTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_21_081006_create_divisions_times_table.php',
@@ -321,6 +322,7 @@ class ComposerStaticInit6f6a485f5cad68ca455dd7c04c1976c9
         'CreateShiftsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_21_120823_create_shifts_table.php',
         'CreateUserRolesTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_18_070426_create_user_roles_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
+        'CreateVisitsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_12_123357_create_visits_table.php',
         'CreateWorkTimesTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_21_133823_create_work_times_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'DayTableSeeder' => __DIR__ . '/../..' . '/database/seeds/DayTableSeeder.php',

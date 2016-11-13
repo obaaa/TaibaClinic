@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CreateAddVisitsTable' => $baseDir . '/database/migrations/2016_11_12_125337_create_add_visits_table.php',
     'CreateCheckedsTable' => $baseDir . '/database/migrations/2016_10_21_081956_create_checkeds_table.php',
     'CreateDaysTable' => $baseDir . '/database/migrations/2016_10_21_122409_create_days_table.php',
     'CreateDivisionsTimesTable' => $baseDir . '/database/migrations/2016_10_21_081006_create_divisions_times_table.php',
@@ -17,6 +18,7 @@ return array(
     'CreateShiftsTable' => $baseDir . '/database/migrations/2016_10_21_120823_create_shifts_table.php',
     'CreateUserRolesTable' => $baseDir . '/database/migrations/2015_12_18_070426_create_user_roles_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
+    'CreateVisitsTable' => $baseDir . '/database/migrations/2016_11_12_123357_create_visits_table.php',
     'CreateWorkTimesTable' => $baseDir . '/database/migrations/2016_10_21_133823_create_work_times_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'DayTableSeeder' => $baseDir . '/database/seeds/DayTableSeeder.php',

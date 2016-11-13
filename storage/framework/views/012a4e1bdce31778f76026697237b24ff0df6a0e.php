@@ -1,5 +1,4 @@
 <?php $__env->startSection('titel','Dashboard'); ?>
-
 <?php $__env->startSection('content'); ?>
         <div class="content">
             <div class="container-fluid">
@@ -107,7 +106,89 @@
                     </div>
                 </div>
                 <div class="row">
+                     <div class="col-lg-6 col-sm-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title"><i class="ti-plus"></i> Visit By Patient</h4>
+                            </div>
+                            <div class="content">
+                                <?php if(Session::has('message')): ?>
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>                                    <p class="alert <?php echo e(Session::get('alert-class', 'alert-info')); ?>"><?php echo e(Session::get('message')); ?></p>
+                                <?php endif; ?>
+                                <form action="<?php echo e(url ('visit_check')); ?>" method="POST" enctype="multipart/form-data" >
+                                    <?php echo csrf_field(); ?>
 
+                                      <div class="row">
+                                          <div class="col-md-6">
+                                              <div class="form-group">
+                                                  <label>Patient</label>
+<!--                                                  <input type="text" name="patient_name"class="form-control border-input" placeholder="name">-->
+                                                        <input list="patient" required="true" name="patient" class="form-control border-input">
+                                                  <datalist id="patient">
+                                                      <?php $patients = App\Patient::all(); ?>
+                                                    <?php $__currentLoopData = $patients; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+                                                    <option value="<?php echo e($value->patient_name); ?>">
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+                                                  </datalist>
+                                              </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                              <div class="form-group">
+                                                  <label>Date</label>
+                                                  <input type="date" required="true" name="visit_date"class="form-control border-input" placeholder="visit_date">
+                                              </div>
+                                          </div>
+                                          <div class="col-md-2">
+                                              <div class="form-group">
+                                                  <label>_</label>
+                                           <button type="submit" class="btn btn-info btn-fill">Go</button>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                  </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title"><i class="ti-plus"></i> Visit By Doctor</h4>
+                            </div>                             
+                            <div class="content">
+                                <form action="<?php echo e(url ('visit_check')); ?>" method="POST" enctype="multipart/form-data" >
+                                    <?php echo csrf_field(); ?>
+
+                                      <div class="row">
+                                          <div class="col-md-9">
+                                              <div class="form-group">
+                                                  <label>Doctor</label>
+                                                <input list="doctor" required="true" name="doctor" class="form-control border-input">
+                                                  <datalist id="doctor">
+                                                      
+                                                    <?php $__currentLoopData = $user_role; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+                                                      <?php $user = App\User::where('id','=',$value->user_id)->first(); ?>
+                                                    <option value="<?php echo e($user->name); ?>">
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+                                                        
+                                                  </datalist>
+                                              </div>
+                                          </div>
+                                          <div class="col-md-2">
+                                              <div class="form-group">
+                                                  <label>_</label>
+                                           <button type="submit" class="btn btn-info btn-fill">Go</button>
+                                              </div>
+                                          </div>
+                                    </div>
+                                      </div>
+                                      <div class="clearfix"></div>
+                                  </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
@@ -197,5 +278,6 @@ $(document).ready(function(){
 });
 </script>
 <?php $__env->stopSection(); ?>
+
 
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\UserRole;
+use App\Role;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+
+        $user_role = UserRole::where('role_id','=','1')->get();
+        return view('dashboard', compact('user_role',$user_role));
     }
 }
