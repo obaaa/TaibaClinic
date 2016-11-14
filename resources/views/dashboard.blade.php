@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <div class="row">
-                     <div class="col-lg-6 col-sm-6">
+                     <div class="col-lg-9 col-sm-9">
                         <div class="card">
                             <div class="header">
                                 <h4 class="title"><i class="ti-plus"></i> Visit By Patient</h4>
@@ -119,10 +119,9 @@
                                 <form action="{{ url ('visit_check') }}" method="POST" enctype="multipart/form-data" >
                                     {!! csrf_field() !!}
                                       <div class="row">
-                                          <div class="col-md-6">
+                                          <div class="col-md-4">
                                               <div class="form-group">
                                                   <label>Patient</label>
-<!--                                                  <input type="text" name="patient_name"class="form-control border-input" placeholder="name">-->
                                                         <input list="patient" required="true" name="patient" class="form-control border-input">
                                                   <datalist id="patient">
                                                       <?php $patients = App\Patient::all(); ?>
@@ -140,7 +139,16 @@
                                           </div>
                                           <div class="col-md-2">
                                               <div class="form-group">
-                                                  <label>_</label>
+                                                  <label>Shift</label>
+                                                <select id="Shift_id" name="Shift_id" class="form-control border-input" required="true">
+                                                      <option value="1">Morning</option>
+                                                      <option value="2">Evening</option>
+                                                </select>
+                                               </div>
+                                          </div>                                          
+                                          <div class="col-md-1">
+                                              <div class="form-group">
+                                                  <label>______</label>
                                            <button type="submit" class="btn btn-info btn-fill">Go</button>
                                               </div>
                                           </div>
@@ -150,7 +158,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-sm-6">
+                    <div class="col-lg-3 col-sm-3">
                         <div class="card">
                             <div class="header">
                                 <h4 class="title"><i class="ti-plus"></i> Visit By Doctor</h4>
@@ -159,7 +167,7 @@
                                 <form action="{{ url ('visit_check') }}" method="POST" enctype="multipart/form-data" >
                                     {!! csrf_field() !!}
                                       <div class="row">
-                                          <div class="col-md-9">
+                                          <div class="col-md-8">
                                               <div class="form-group">
                                                   <label>Doctor</label>
                                                 <input list="doctor" required="true" name="doctor" class="form-control border-input">

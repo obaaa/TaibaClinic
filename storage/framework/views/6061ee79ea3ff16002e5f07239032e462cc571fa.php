@@ -30,29 +30,23 @@
                                   <input type="hidden" value="<?php echo e($visit_date); ?>">
                               </div>
                           </div>
-                          <div class="col-md-3">
-                              <div class="form-group">
-                                  <label for="exampleInputPhone">Phone</label>
-                                  <input type="number" name="patient_phone" class="form-control border-input" placeholder="phone">
-                              </div>
-                          </div>
+                            <?php $user_role = App\UserRole::where('role_id','=','1')->get(); ?>
 
-                          <div class="col-md-2">
-                              <div class="form-group">
-                                  <label>Blood Group</label>
-                                  <select name="patient_blood" class="form-control border-input">
-                                    <option selected></option>
-                                    <option value="O−">O−</option>
-                                    <option value="O+">O+</option>
-                                    <option value="A−">A−</option>
-                                    <option value="A+">A+</option>
-                                    <option value="B−">B−</option>
-                                    <option value="B+">B+</option>
-                                    <option value="AB−">AB−</option>
-                                    <option value="AB+">AB+</option>
-                                  </select>
-                                </div>
-                          </div>
+                            <div class="col-md-4">
+                                  <div class="form-group">
+                                      <label>Doctor</label>
+                                      <select id="doctor_id" name="doctor_id" class="form-control border-input" required="true">
+                                          <?php $__currentLoopData = $user_role; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
+                                          <?php 
+                                            $user = App\User::where('id','=',$value->user_id)->first();
+                                            $employee_work_times = App\Employee_work_time::all();
+                                          ?>
+                                            <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+                                          <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
+                                      </select>
+                                  </div>
+                              </div>
+
                       </div>
 
                       <div class="row">
