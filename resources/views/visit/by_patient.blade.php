@@ -4,7 +4,9 @@
 @section('content')
 <div class="content">
     <div class="row">
+      {{-- $patient $visit_date $stamp $work_time --}}
       {{--  --}}
+
       {{--  --}}
 
       <div class="col-lg-12 col-md-12" id="toggle-detail" >
@@ -20,60 +22,88 @@
                               <div class="form-group">
                                   <label>Pationt</label>
                                   <p class="form-control border-input">{{$patient}}</p>
-                                  <input type="hidden" value="{{$patient}}">
+                                  <input type="hidden" name="patient" value="{{$patient}}">
                               </div>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-4">
                               <div class="form-group">
                                   <label>Date</label>
-                                  <p class="form-control border-input">{{$stamp}} {{$visit_date}}</p>
-                                  <input type="hidden" value="{{$visit_date}}">
+                                  <p class="form-control border-input">
+                                    {{$visit_date}} |
+                                    {{$stamp}} |
+                                    {{App\Shift::find($work_time->shift_id)->shift_name}}
+                                  </p>
+                                  <input type="hidden" name="visit_date" value="{{$visit_date}}">
                               </div>
                           </div>
+
                             <?php $user_role = App\UserRole::where('role_id','=','1')->get(); ?>
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                   <div class="form-group">
                                       <label>Doctor</label>
                                       <select id="doctor_id" name="doctor_id" class="form-control border-input" required="true">
                                           @foreach($user_role as $value)
-                                          <?php 
+                                          <?php
                                             $user = App\User::where('id','=',$value->user_id)->first();
-                                            $employee_work_times = App\Employee_work_time::all();
+                                            $employee_work_times = App\Employee_work_time::where('work_time_id','=',$work_time->id)->where('user_id','=',$user->id)->get();
                                           ?>
+                                          @if (count($employee_work_times) != 0)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                          @endif
                                           @endforeach
                                       </select>
                                   </div>
                               </div>
-
                       </div>
-
+                      <?php
+                        $divisions_times_start = $work_time->divisions_times_start_id;
+                        $divisions_times_end = $work_time->divisions_times_end_id;
+                        $range = $divisions_times_end - $divisions_times_start;
+                      ?>
+                      <hr>
                       <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label>Address</label>
-                                <input type="text" name="patient_address" class="form-control border-input" placeholder="Home Address">
+                                <label>Time</label><br>&nbsp;
+
+                                 @for ($i=0; $i < $range; $i++)
+
+                                    <?php 
+                                      $time = App\Divisions_time::where('id','=',$divisions_times_start)->first();
+                                      $visit = App\Visit::where('divisions_time_id','=',$time->id)->where('visit_date','=',$visit_date)->first();
+                                    ?>
+
+                                        @if (count($visit) == 0)
+                                       <label class="radio-inline bg-info border-input"><h5><input type="radio" name="divisions_time_id" value="{{$time->id}}">{{$time->time}}</input></h5></label>
+                                        @else
+                                       <label class="radio-inline bg-default border-input"><h5><input type="radio" disabled="true" name="divisions_time_id" value="{{$time->id}}">{{$time->time}}</input></h5></label>
+                                        @endif
+                                   <?php $divisions_times_start++ ?>
+
+                                 @endfor
+
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Birthday</label>
-                                <input type="date" name="patient_birthday" class="form-control border-input">
-                            </div>
-                        </div>
                       </div>
-
+                      <hr>
                       <div class="row">
-                          <div class="col-md-12">
-                              <div class="form-group">
-                                  <label>Chronic Diseases</label>
-                                  <textarea rows="5" name="patient_diseases" class="form-control border-input" placeholder="Description"></textarea>
-                              </div>
+                          <div class="col-md-10">
+                            <div class="form-group">
+                                <label>checked</label><br>
+                                <?php $i=0; ?>
+                                  @foreach($checkeds as $value)
+                                    <label class="checkbox-inline bg-info border-input">
+                                    <input tabindex="1" type="checkbox" name="checked[]" id="{{$value->id}}" value="{{$value->id}}"><h5>{{$value->checked_name}}&nbsp;
+                                    </h5></label>
+                                    <?php $i++; ?>
+                                  @endforeach
+                            </div>
                           </div>
                       </div>
+                      <input type="hidden" name="work_time_id" value="{{$work_time->id}}">
                       <div class="text-center">
-                          <button type="submit" class="btn btn-info btn-fill btn-wd">Add</button>
+                          <button type="submit" class="btn btn-info btn-fill btn-wd">Go</button>
                       </div>
                       <div class="clearfix"></div>
                   </form>
