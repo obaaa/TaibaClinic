@@ -12,6 +12,9 @@
           <div class="card"  >
               <div class="header">
                   <h4 class="title">create visit</h4>
+                  <?php if(Session::has('message')): ?>
+                     <div class="alert alert-info"><?php echo e(Session::get('message')); ?></div>
+                  <?php endif; ?>
               </div>
               <div class="content">
                   <form action="<?php echo e(url ('visit')); ?>" method="POST" enctype="multipart/form-data" >
@@ -92,12 +95,10 @@
                           <div class="col-md-10">
                             <div class="form-group">
                                 <label>checked</label><br>
-                                <?php $i=0; ?>
                                   <?php $__currentLoopData = $checkeds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
-                                    <label class="checkbox-inline bg-info border-input">
-                                    <input tabindex="1" type="checkbox" name="checked[]" id="<?php echo e($value->id); ?>" value="<?php echo e($value->id); ?>"><h5><?php echo e($value->checked_name); ?>&nbsp;
+                                    <label required="true" class="checkbox-inline bg-info border-input">
+                                    <input tabindex="1"  type="checkbox" name="checked[]" id="<?php echo e($value->id); ?>" value="<?php echo e($value->id); ?>"><h5><?php echo e($value->checked_name); ?>&nbsp;
                                     </h5></label>
-                                    <?php $i++; ?>
                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                             </div>
                           </div>

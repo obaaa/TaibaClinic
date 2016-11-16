@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Patient;
+use App\Visit;
 
 class PatientController extends Controller
 {
@@ -71,13 +72,12 @@ class PatientController extends Controller
     }
 
 //***************************show***************************//
-    /**
-     * ->id
-     */
+
     public function show($id)
     {
       $patient = Patient::find($id);
-      return view('patient.show')->withpatient($patient);
+      $visits = Visit::where('patient_id','=',$id)->orderBy('created_at', 'desc')->get()->all();
+      return view('patient.show', compact('patient',$patient,'visits',$visits));
 
       // return view('show',compact('patient',$patient));
     }

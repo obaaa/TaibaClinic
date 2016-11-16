@@ -1,9 +1,9 @@
   @extends('layouts.master')
   @section('content')
-  @section('titel','patient > show')
+  @section('titel','patient')
   <div class="content">
       <div class="row">
-        {{--  --}}
+        {{-- patient visits --}}
 
         {{--  --}}
         <div class="col-md-8 col-md-8">
@@ -137,21 +137,43 @@
         		  <table class="members_details">
           			<thead>
           				<tr>
-          					<th class="patient_name text_align_center"><b>Date</b></th>
-          					<th class="patient_gender text_align_center"><b>Doctor</b></th>
-          					<th class="patient_phone text_align_center"><b>Invoice value</b></th>
-                    <th class="patient_birthday text_align_center"><b>pid</b></th>
+                    <th class="date text_align_center"><b>Date</b></th>
+                    <th class="day text_align_center"><b>Day</b></th>
+                    <th class="time text_align_center"><b>Time</b></th>
+          					<th class="doctor text_align_center"><b>Doctor</b></th>
+          					<th class="visit_value text_align_center"><b>Visit_value</b></th>
+                    <th class="visit_pid text_align_center"><b>Visit_pid</b></th>
           				</tr>
           			</thead>
           			<tbody>
-
-
+                {{-- patient visits --}}
+                @foreach($visits as $value)
           			<tr>
-          				<td class="patient_name"><a href="{{ url ('#') }}" class="" ></a></td>
-                  <td class="patient_gender"></td>
-          				<td class="patient_phone text_align_center"></td>
-                  <td class="patient_birthday"></td>
+          				<td class="date">
+                    <a href="{{ url ('visit/'.$value->id) }}" class="" >{{$value->visit_date}}</a>
+                  </td>
+                  <td class="day">
+                    <?php 
+                      $date_stamp = strtotime(date('Y-m-d', strtotime($value->visit_date)));
+                      $stamp = date('l', $date_stamp);
+                    ?>
+                    {{$stamp}}
+                  </td>
+                  <td class="time">
+                    {{App\Divisions_time::find($value->divisions_time_id)->time}}
+                  </td>
+                  </td>
+                  <td class="doctor">
+                    {{App\User::find($value->doctor_id)->name}}
+                  </td>
+          				<td class="visit_value text_align_center">
+                    {{$value->visit_price}}
+                  </td>
+                  <td class="visit_pid">
+                    {{$value->visit_paid}}
+                  </td>
           			</tr>
+                @endforeach
 
           		</tbody>
         		</table>

@@ -13,6 +13,9 @@
           <div class="card"  >
               <div class="header">
                   <h4 class="title">create visit</h4>
+                  @if (Session::has('message'))
+                     <div class="alert alert-info">{{ Session::get('message') }}</div>
+                  @endif
               </div>
               <div class="content">
                   <form action="{{ url ('visit') }}" method="POST" enctype="multipart/form-data" >
@@ -91,12 +94,10 @@
                           <div class="col-md-10">
                             <div class="form-group">
                                 <label>checked</label><br>
-                                <?php $i=0; ?>
                                   @foreach($checkeds as $value)
-                                    <label class="checkbox-inline bg-info border-input">
-                                    <input tabindex="1" type="checkbox" name="checked[]" id="{{$value->id}}" value="{{$value->id}}"><h5>{{$value->checked_name}}&nbsp;
+                                    <label required="true" class="checkbox-inline bg-info border-input">
+                                    <input tabindex="1"  type="checkbox" name="checked[]" id="{{$value->id}}" value="{{$value->id}}"><h5>{{$value->checked_name}}&nbsp;
                                     </h5></label>
-                                    <?php $i++; ?>
                                   @endforeach
                             </div>
                           </div>

@@ -90,46 +90,71 @@ class VisitController extends Controller
      */
     public function store(Request $request)
     {
-
+     // 
+        $rules = array(
+         'divisions_time_id' => 'required',
+         'checked[]' => 'required',
+         );
+         $validator = Validator::make(Input::all(), $rules);
+         if ($validator->fails())
+         {
+         Session::flash('message', 'error');
+          return Redirect::back();         
+         } else {
+    // 
+      $input = $request->all();
       $patient = Input::get('patient');
       $visit_date = Input::get('visit_date');
-      $doctor_id = Input::get('doctor_id');//
-      $divisions_time_id = Input::get('divisions_time_id');//
-      $work_time_id = Input::get('work_time_id');//
+      $doctor_id = Input::get('doctor_id');
+      $divisions_time_id = Input::get('divisions_time_id');
+      $work_time_id = Input::get('work_time_id');
 
 
       $patient = Patient::where('patient_name','=',$patient)->first();
-      $patient_id = $patient->id;//
+      $patient_id = $patient->id;
 
       $visit = Visit::where('visit_date','=',$visit_date)->where('divisions_time_id','=',$divisions_time_id)->first();
 
       if (count($visit) == 0) {
-          $new_visit = new Visit;
-          $new_visit->patient_id = $patient_id;
-          $new_visit->doctor_id = $doctor_id;
-          //$new_visit->receptionist_id = $receptionist_id;
-          $new_visit->work_time_id = $work_time_id;
-          //$new_visit->visit_price = 
-          //$new_visit->visit_paid = 
-          $new_visit->visit_date = $visit_date;
-          $new_visit->divisions_time_id = $divisions_time_id;
-          $new_visit->save();
+       $new_visit = new Visit;
+       $new_visit->patient_id = $patient_id;
+       $new_visit->doctor_id = $doctor_id;
+       $new_visit->work_time_id = $work_time_id;
+       //$new_visit->visit_price = 
+       $new_visit->visit_paid = 0;
+       $new_visit->visit_date = $visit_date;
+       $new_visit->divisions_time_id = $divisions_time_id;
+       $new_visit->save();
+       // 
+       $visit = Visit::all()->last();
+       $visit_id = $visit->id;
+       $checked[]=$request->input('checked[]');
 
-          $visit = Visit::all()->last();
+       for($i=0; $i < count($input['checked']);$i++){
 
-          $visit_id = $visit->id;
+        //add new add_visit
+        $new_add_visit = new Add_visit;
+         $new_add_visit->checked_id = $input['checked'][$i];
+         $new_add_visit->visit_id = $visit_id;
+        $new_add_visit->save(); 
 
+        // get checked_price
+        $checked_id = $input['checked'][$i];
+        $checked = Checked::where('id','=',$checked_id)->first();
+          $checked_price = $checked->checked_price;
 
-          $checked = Input::get('checked');
-          for($i=0; $i < count($checked);$i++){
-
-            $add_visit = new Add_visit;
-            $add_visit->checked_id = $checked[$i];
-            $add_visit->visit_id = $visit_id;
-            $add_visit->save();
-          }
-      }
-
+        // +visit_price
+        $add_to_visit = Visit::find($visit_id);
+         $add_to_visit->visit_price = $add_to_visit->visit_price + $checked_price;
+        $add_to_visit->save();
+       }
+       Session::flash('message', 'You have successfully added visit');
+       return redirect()->action('PatientController@show', ['id' => $patient_id]);
+             
+      }else{
+         Session::flash('message', 'Date or Shift is not available');
+         return Redirect::to('home');
+      }}
     }
 
     /**
@@ -140,7 +165,9 @@ class VisitController extends Controller
      */
     public function show($id)
     {
-        //
+
+     $visit = Visit::find($id);
+     return view ('visit.show',compact('visit',$visit));
     }
 
     /**

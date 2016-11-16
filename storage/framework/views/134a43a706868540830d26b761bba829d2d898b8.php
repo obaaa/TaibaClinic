@@ -1,6 +1,6 @@
   
   <?php $__env->startSection('content'); ?>
-  <?php $__env->startSection('titel','patient > show'); ?>
+  <?php $__env->startSection('titel','patient'); ?>
   <div class="content">
       <div class="row">
         
@@ -140,21 +140,48 @@
         		  <table class="members_details">
           			<thead>
           				<tr>
-          					<th class="patient_name text_align_center"><b>Date</b></th>
-          					<th class="patient_gender text_align_center"><b>Doctor</b></th>
-          					<th class="patient_phone text_align_center"><b>Invoice value</b></th>
-                    <th class="patient_birthday text_align_center"><b>pid</b></th>
+                    <th class="date text_align_center"><b>Date</b></th>
+                    <th class="day text_align_center"><b>Day</b></th>
+                    <th class="time text_align_center"><b>Time</b></th>
+          					<th class="doctor text_align_center"><b>Doctor</b></th>
+          					<th class="visit_value text_align_center"><b>Visit_value</b></th>
+                    <th class="visit_pid text_align_center"><b>Visit_pid</b></th>
           				</tr>
           			</thead>
           			<tbody>
-
-
+                
+                <?php $__currentLoopData = $visits; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
           			<tr>
-          				<td class="patient_name"><a href="<?php echo e(url ('#')); ?>" class="" ></a></td>
-                  <td class="patient_gender"></td>
-          				<td class="patient_phone text_align_center"></td>
-                  <td class="patient_birthday"></td>
+          				<td class="date">
+                    <a href="<?php echo e(url ('visit/'.$value->id)); ?>" class="" ><?php echo e($value->visit_date); ?></a>
+                  </td>
+                  <td class="day">
+                    <?php 
+                      $date_stamp = strtotime(date('Y-m-d', strtotime($value->visit_date)));
+                      $stamp = date('l', $date_stamp);
+                    ?>
+                    <?php echo e($stamp); ?>
+
+                  </td>
+                  <td class="time">
+                    <?php echo e(App\Divisions_time::find($value->divisions_time_id)->time); ?>
+
+                  </td>
+                  </td>
+                  <td class="doctor">
+                    <?php echo e(App\User::find($value->doctor_id)->name); ?>
+
+                  </td>
+          				<td class="visit_value text_align_center">
+                    <?php echo e($value->visit_price); ?>
+
+                  </td>
+                  <td class="visit_pid">
+                    <?php echo e($value->visit_paid); ?>
+
+                  </td>
           			</tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
 
           		</tbody>
         		</table>
