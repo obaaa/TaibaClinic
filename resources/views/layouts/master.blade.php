@@ -15,6 +15,10 @@
 
   <title>{{ config('app.name', 'Laravel') }} | @yield('titel') </title>
 
+{{--  --}}
+  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
+{{--  --}}
   <script>
       window.Laravel = <?php echo json_encode([
           'csrfToken' => csrf_token(),

@@ -14,7 +14,7 @@
 
                     <h4 class="title"><b><a href="#"><?php echo e($patient->patient_name); ?></a><b></h4>
                       <hr>
-                    </div>
+                </div>
                 <div class="content">
                 <?php echo e(Form::model($visit, array('route' => array('visit.update', $visit->id), 'method' => 'PUT'))); ?>
 
@@ -58,7 +58,7 @@
                         </div>
 
                         <div class="row">
-                          <div class="col-md-8">
+                          <div class="col-md-12">
                               <div class="form-group">
                                 <label>checked</label><br>
                                 <?php 
@@ -66,16 +66,11 @@
                                 ?>
                                   <?php $__currentLoopData = $checkeds; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getFirstLoop(); ?>
                                   <?php $checked = App\Checked::find($value->checked_id); ?> 
-                                    <input type="text" disabled="true" name="checked[]" class="edit border-input" value="<?php echo e($checked->checked_name); ?>">&nbsp;
+                                    <input type="text" disabled="true" name="checked[]" class="edit border-input" value="<?php echo e($checked->checked_name); ?>">&nbsp;&nbsp;
                                   <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
                               </div>
                           </div>
-                          <div class="col-md-4">
-                              <div class="form-group">
-                                  <label>Birthday</label>
 
-                              </div>
-                          </div>
                         </div>
 
                         <div class="row">
@@ -94,9 +89,49 @@
                     <div>
                         <a class="edits" href="#" id="toggle-btn" onclick="toggleDetail()">Edit</a>
                         
-                      </div>
+                    </div>
+                </div>
+              </div>
+            
+          <div class="col-md-10 col-md-10">
+
+            <div class="card"  >
+                <div  class="text-center">
+                  <br>
+                  <?php $patient = App\Patient::find($visit->patient_id); ?>
+
+                    <h4 class="title"><b><a href="#">medical report</a><b></h4>
+                      <hr>
+                    </div>
+                <div class="content">
+                <?php echo e(Form::model($visit, array('route' => array('visit.update', $visit->id), 'method' => 'PUT'))); ?>
+
+                      <?php echo csrf_field(); ?>
+
+                      <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>" />
+                        <div class="row">
+                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                <textarea>Easy! You should check out MoxieManager!</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-info btn-fill btn-wd" id="toggle-detail" style="display:none;">Update</button>
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                    <div>
+                        <a class="edits" href="#" id="toggle-btn" onclick="toggleDetail()">Edit</a>
+                        
+                    </div>
                 </div>
             </div>
+            </div>  
+            
         </div>
         
         <div class="col-md-4 col-md-4">
