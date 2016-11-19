@@ -6,7 +6,7 @@
         {{-- patient visits --}}
 
         {{--  --}}
-        <div class="col-md-8 col-md-8">
+        <div class="col-md-12 col-md-12">
             <div class="card"  >
                 <div  class="text-center">
                   <br>
@@ -95,7 +95,7 @@
             </div>
         </div>
         {{--  --}}
-        <div class="col-md-4 col-md-4">
+        {{-- <div class="col-md-4 col-md-4">
             <div class="card"  >
                 <div  class="text-center">
                   <br>
@@ -121,11 +121,13 @@
                 </div>
             </div>
         </div>
-      </div>
+      </div> --}}
         {{--  --}}
         {{-- class="text-center" --}}
-        <div class="col-lg-12 col-md-12">
+        <div class="col-md-12 col-md-12">
             <div class="card">
+            <div class="row">
+            <div class="col-md-12">
             <div class="header">
               <h4 class="title">Visits</h4>
             </div>
@@ -153,7 +155,7 @@
                     <a href="{{ url ('visit/'.$value->id) }}" class="" >{{$value->visit_date}}</a>
                   </td>
                   <td class="day">
-                    <?php 
+                    <?php
                       $date_stamp = strtotime(date('Y-m-d', strtotime($value->visit_date)));
                       $stamp = date('l', $date_stamp);
                     ?>
@@ -174,7 +176,6 @@
                   </td>
           			</tr>
                 @endforeach
-
           		</tbody>
         		</table>
           </div>
@@ -182,7 +183,7 @@
       </div>
     </div>
   {{--  --}}
-  </div>
+  </div></div></div>
   </div>
 
   @endsection

@@ -6,7 +6,7 @@
         
 
         
-        <div class="col-md-8 col-md-8">
+        <div class="col-md-12 col-md-12">
             <div class="card"  >
                 <div  class="text-center">
                   <br>
@@ -97,38 +97,13 @@
             </div>
         </div>
         
-        <div class="col-md-4 col-md-4">
-            <div class="card"  >
-                <div  class="text-center">
-                  <br>
-                    <h4 class="title">New Visit</h4>
-                      <hr>
-                <div class="content">
-                    <form action="<?php echo e(action('PatientController@update',['id'=>$patient->id])); ?>" method="put">
-                      <?php echo csrf_field(); ?>
-
-                        <div class="row">
-                          <div class="col-md-12">
-                              <div class="form-group">
-                                  <label>Date</label>
-                                  <input type="date" name="patient_birthday" class="form-control border-input">
-                              </div>
-                          </div>
-                        </div>
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-info btn-fill btn-wd">go</button>
-                        </div>
-                        <div class="clearfix"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-      </div>
         
         
-        <div class="col-lg-12 col-md-12">
+        
+        <div class="col-md-12 col-md-12">
             <div class="card">
+            <div class="row">
+            <div class="col-md-12">
             <div class="header">
               <h4 class="title">Visits</h4>
             </div>
@@ -156,7 +131,7 @@
                     <a href="<?php echo e(url ('visit/'.$value->id)); ?>" class="" ><?php echo e($value->visit_date); ?></a>
                   </td>
                   <td class="day">
-                    <?php 
+                    <?php
                       $date_stamp = strtotime(date('Y-m-d', strtotime($value->visit_date)));
                       $stamp = date('l', $date_stamp);
                     ?>
@@ -182,7 +157,6 @@
                   </td>
           			</tr>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
-
           		</tbody>
         		</table>
           </div>
@@ -190,7 +164,7 @@
       </div>
     </div>
   
-  </div>
+  </div></div></div>
   </div>
 
   <?php $__env->stopSection(); ?>

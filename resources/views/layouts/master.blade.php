@@ -15,9 +15,15 @@
 
   <title>{{ config('app.name', 'Laravel') }} | @yield('titel') </title>
 
-{{--  --}}
-  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+ {{-- --}}
+ <script src="{!!asset('/assets/tinymce/tinymce.min.js')!!}"></script>
+ <script src="{!!asset('/assets/tinymce/jquery.tinymce.min.js')!!}"></script>
+ <script src="{!!asset('/assets/tinymce/themes/modern/theme.min.js')!!}"></script>
   <script>tinymce.init({ selector:'textarea' });</script>
+{{--  --}}
+<script src="{!!asset('/assets/dist/css/summernote.css')!!}"></script>
+
+ <script src="{!!asset('/assets/js/summernote.min.js')!!}"></script>
 {{--  --}}
   <script>
       window.Laravel = <?php echo json_encode([
@@ -47,7 +53,6 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{URL::asset('assets/css/demo.css')}}" rel="stylesheet" />
     <link href="/css/filter.css" rel="stylesheet" />
-
 
     <!--  Fonts and icons     -->
     <link href="{{URL::asset('assets/css/font-awesome.min.css')}}" rel="stylesheet">
@@ -81,7 +86,7 @@
                   <li class="{{ Request::is('appointment') ? 'active' : '' }}">
                       <a href="{{URL::to('/appointment')}}">
                           <i class="ti-time"></i>
-                          <p>Appointment</p>
+                          <p>Appointments</p>
                       </a>
                   </li>
                   <li class="{{ Request::is('patient*') ? 'active' : '' }}" >
@@ -226,5 +231,11 @@
 
       <script src="{{URL::asset('js/index.js')}}"></script> --}}
       {{--  --}}
-
+  <script type="text/javascript">
+      $(document).ready(function() {
+          $('#summernote').summernote({
+            height:300,
+          });
+      });
+  </script>
   </html>

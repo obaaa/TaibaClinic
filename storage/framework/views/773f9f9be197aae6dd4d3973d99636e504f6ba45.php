@@ -37,14 +37,10 @@
                       </tr>
                     </tbody>
                   </table>
-
-                  
                 </div>
               </div>
             </div>
             <div class="panel-footer">
-                  
-                  
 										<?php if($employee->id != 1): ?>
 			                <a class="btn btn-small btn-info" href="<?php echo e(URL::to('employees/' . $employee->id . '/edit')); ?>">Edit</a>
 			                <?php echo Form::open(array('url' => 'employees/' . $employee->id, 'class' => 'pull-right')); ?>
@@ -56,7 +52,6 @@
 			                <?php echo Form::close(); ?>
 
 										<?php endif; ?>
-									
             </div>
           </div>
         </div>

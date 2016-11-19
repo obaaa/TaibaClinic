@@ -129,7 +129,9 @@ class PatientController extends Controller
       $patient->patient_address = $patient_address;
       $patient->save();
 
-      return view('patient.show')->withpatient($patient);
+      $visits = Visit::where('patient_id','=',$id)->get();
+
+      return view('patient.show',compact('patient',$patient,'visits',$visits));
     }
 
     /**

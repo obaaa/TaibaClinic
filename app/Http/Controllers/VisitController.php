@@ -90,7 +90,7 @@ class VisitController extends Controller
      */
     public function store(Request $request)
     {
-     // 
+     //
         $rules = array(
          'divisions_time_id' => 'required',
          'checked[]' => 'required',
@@ -99,9 +99,9 @@ class VisitController extends Controller
          if ($validator->fails())
          {
          Session::flash('message', 'error');
-          return Redirect::back();         
+          return Redirect::back();
          } else {
-    // 
+    //
       $input = $request->all();
       $patient = Input::get('patient');
       $visit_date = Input::get('visit_date');
@@ -120,12 +120,12 @@ class VisitController extends Controller
        $new_visit->patient_id = $patient_id;
        $new_visit->doctor_id = $doctor_id;
        $new_visit->work_time_id = $work_time_id;
-       //$new_visit->visit_price = 
+       //$new_visit->visit_price =
        $new_visit->visit_paid = 0;
        $new_visit->visit_date = $visit_date;
        $new_visit->divisions_time_id = $divisions_time_id;
        $new_visit->save();
-       // 
+       //
        $visit = Visit::all()->last();
        $visit_id = $visit->id;
        $checked[]=$request->input('checked[]');
@@ -136,7 +136,7 @@ class VisitController extends Controller
         $new_add_visit = new Add_visit;
          $new_add_visit->checked_id = $input['checked'][$i];
          $new_add_visit->visit_id = $visit_id;
-        $new_add_visit->save(); 
+        $new_add_visit->save();
 
         // get checked_price
         $checked_id = $input['checked'][$i];
@@ -150,13 +150,45 @@ class VisitController extends Controller
        }
        Session::flash('message', 'You have successfully added visit');
        return redirect()->action('PatientController@show', ['id' => $patient_id]);
-             
+
       }else{
          Session::flash('message', 'Date or Shift is not available');
          return Redirect::to('home');
       }}
     }
 
+    public function medical_report(Request $request)
+    {
+      $input = $request->all();
+
+     $medical_report = Input::get('medical_report');
+     $visit_id = Input::get('visit_id');
+     $patient_id = Input::get('patient_id');
+
+     $visit = Visit::find($visit_id);
+     $visit->medical_report = $medical_report;
+     $visit->save();
+
+     $visit = Visit::find($visit_id);
+     return view ('visit.show',compact('visit',$visit));
+     }
+
+
+     public function payment(Request $request)
+     {
+       $input = $request->all();
+
+      $visit_id = Input::get('visit_id');
+      $payment = Input::get('payment');
+      // $patient_id = Input::get('patient_id');
+
+      $visit = Visit::find($visit_id);
+      $visit->medical_report = $medical_report;
+      $visit->save();
+
+      $visit = Visit::find($visit_id);
+      return view ('visit.show',compact('visit',$visit));
+      }
     /**
      * Display the specified resource.
      *
@@ -165,7 +197,6 @@ class VisitController extends Controller
      */
     public function show($id)
     {
-
      $visit = Visit::find($id);
      return view ('visit.show',compact('visit',$visit));
     }
@@ -180,7 +211,6 @@ class VisitController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *

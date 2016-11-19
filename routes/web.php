@@ -38,11 +38,15 @@ Route::resource("work_times", "Work_timeController");
 
 Route::post('employee_work_time', 'Work_timeController@employee_work_time');
 
-
 Route::resource("visit", "VisitController");
-Route::post('visit_check', 'VisitController@visit_check');
 
+Route::POST('visit_check', 'VisitController@visit_check');
 
+Route::POST('visit/medical_report/', 'VisitController@medical_report');
+
+Route::POST('payment', 'VisitController@payment');
+
+Route::resource("appointment", "AppointmentController");
 
 Route::resource("shift_employees", "Shift_employeeController");
 

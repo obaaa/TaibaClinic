@@ -37,15 +37,10 @@
                       </tr>
                     </tbody>
                   </table>
-
-                  {{-- <a href="#" class="btn btn-primary">employee shift</a>
-                  <a href="#" class="btn btn-primary">Team Sales Performance</a> --}}
                 </div>
               </div>
             </div>
             <div class="panel-footer">
-                  {{-- <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a> --}}
-                  {{-- <span class="pull-right"> --}}
 										@if ($employee->id != 1)
 			                <a class="btn btn-small btn-info" href="{{ URL::to('employees/' . $employee->id . '/edit') }}">Edit</a>
 			                {!! Form::open(array('url' => 'employees/' . $employee->id, 'class' => 'pull-right')) !!}
@@ -53,7 +48,6 @@
 			                    {!! Form::submit(trans('Delete'), array('class' => 'btn btn-warning')) !!}
 			                {!! Form::close() !!}
 										@endif
-									{{-- </span> --}}
             </div>
           </div>
         </div>

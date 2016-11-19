@@ -39,9 +39,7 @@
                                   <input type="hidden" name="visit_date" value="{{$visit_date}}">
                               </div>
                           </div>
-
                             <?php $user_role = App\UserRole::where('role_id','=','1')->get(); ?>
-
                             <div class="col-md-3">
                                   <div class="form-group">
                                       <label>Doctor</label>
@@ -69,23 +67,18 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Time</label><br>&nbsp;
-
                                  @for ($i=0; $i < $range; $i++)
-
-                                    <?php 
+                                    <?php
                                       $time = App\Divisions_time::where('id','=',$divisions_times_start)->first();
                                       $visit = App\Visit::where('divisions_time_id','=',$time->id)->where('visit_date','=',$visit_date)->first();
                                     ?>
-
                                         @if (count($visit) == 0)
                                        <label class="radio-inline bg-info border-input"><h5><input type="radio" name="divisions_time_id" value="{{$time->id}}">{{$time->time}}</input></h5></label>
                                         @else
                                        <label class="radio-inline bg-default border-input"><h5><input type="radio" disabled="true" name="divisions_time_id" value="{{$time->id}}">{{$time->time}}</input></h5></label>
                                         @endif
                                    <?php $divisions_times_start++ ?>
-
                                  @endfor
-
                             </div>
                         </div>
                       </div>
