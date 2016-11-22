@@ -59,12 +59,12 @@ class SlackWebhookChannel
             'channel' => data_get($message, 'channel'),
         ]);
 
-        return [
+        return array_merge([
             'json' => array_merge([
                 'text' => $message->content,
                 'attachments' => $this->attachments($message),
             ], $optionalFields),
-        ];
+        ], $message->http);
     }
 
     /**
@@ -77,7 +77,7 @@ class SlackWebhookChannel
     {
         return collect($message->attachments)->map(function ($attachment) use ($message) {
             return array_filter([
-                'color' => $message->color(),
+                'color' => $attachment->color ?: $message->color(),
                 'title' => $attachment->title,
                 'text' => $attachment->content,
                 'title_link' => $attachment->url,

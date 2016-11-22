@@ -17,6 +17,7 @@
 					<div class="form-group">
 					{!! Form::label('work_times', trans('work_times').' *') !!}
 						<select id="work_time_id" name="work_time_id" class="form-control border-input">
+							<option disabled selected value> -- select -- </option>
 							@foreach($work_times as $value)
 								<option value="{{ $value->id }}">
                   {{App\Day::find($value->day_id)->day_name}} -

@@ -2,9 +2,12 @@
   @section('content')
   @section('titel','visit')
   <div class="content">
+    @if (Session::has('message'))
+       <div class="alert alert-info">{{ Session::get('message') }}</div>
+    @endif
       <div class="row">
         {{-- patient visits --}}
-        <div class="col-md-8 col-md-8">
+        <div class="col-md-12 col-md-12">
             <div class="card">
                 <div class="text-center">
                   <br>
@@ -59,23 +62,19 @@
                                 ?>
                                   @foreach($checkeds as $value)
                                   <?php $checked = App\Checked::find($value->checked_id); ?>
-                                    <input type="text" disabled="true" name="checked[]" class="edit border-input" value="{{$checked->checked_name}}">&nbsp;&nbsp;
+                                  <?php if ($value->checked_id != 158) { ?>
+                                      <input type="text" disabled="true" name="checked[]" class="edit border-input" value="{{$checked->checked_name}}">&nbsp;&nbsp;
+                                    <?php } ?>
                                   @endforeach
                               </div>
                           </div>
                         </div>
-                        <div class="row">
-                        </div>
-                        {{-- <div class="text-center">
-                            <button type="submit" class="btn btn-info btn-fill btn-wd">Update</button>
-                        </div>
-                        <div class="clearfix"></div> --}}
-                    </form>
                 </div>
               </div>
         </div>
         {{--  --}}
-        <div class="col-md-4 col-md-4">
+        <div class="col-md-12 col-md-12">
+        <div class="col-md-6 col-md-6">
             <div class="card"  >
                 <div  class="text-center">
                   <br>
@@ -83,15 +82,53 @@
                       <hr>
                 <div class="content">
                   <form action="{{'payment'}}" method="POST">
-                      {!! csrf_field() !!}
+                    <input type="hidden" name="_token" value="{{csrf_token()}}" />
                         <div class="row">
                           <div class="col-md-12">
                             <input type="hidden" name="visit_id" value="{{$visit->id}}"/>
                               <div class="form-group">
-                                <label>price : {{$visit->visit_price}}</label><br>
-                                <label>paid : {{$visit->visit_paid}}</label>
-                                  <input type="number" name="payment" class="form-control border-input">
+                                <label>price: {{$visit->visit_price}}</label> |
+                                <label>paid: {{$visit->visit_paid}}</label> |
+                                <label>Residual: {{$visit->visit_price - $visit->visit_paid}}</label>
+                                <input type="number" name="payment" class="form-control border-input"/>
                               </div>
+                          </div>
+                        </div>
+                        <div class="text-center">
+                            {{Form::submit('go',array('class' => 'btn btn-info btn-fill btn-wd'))}}
+                        </div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+        <div class="col-md-6 col-md-6">
+            <div class="card"  >
+                <div  class="text-center">
+                  <br>
+                    <h4 class="title">Add checked</h4>
+                      <hr>
+                <div class="content">
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group">
+                                <label>checked</label><br>
+                                <?php $all_checked = App\Checked::all(); ?>
+                                <form action="{{'checked'}}" method="POST">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                                <input type="hidden" name="visit_id" value="{{$visit->id}}"/>
+                                <select id="checked_id" name="checked_id" class="form-control border-input">
+                                  <option disabled selected value> -- select checked -- </option>
+
+                                  @foreach($all_checked as $value)
+                                  <?php if ($value->id != 158) { ?>
+                                    <option value="{{ $value->id }}">{{$value->checked_name}}</option>
+                                  <?php } ?>
+                                  @endforeach
+
+                                </select>
+                            </div>
                           </div>
                         </div>
                         <div class="text-center">
@@ -103,63 +140,78 @@
             </div>
         </div>
       </div>
-        <div class="col-md-4 col-md-4">
-            <div class="card"  >
-                <div  class="text-center">
-                  <br>
-                    <h4 class="title">Add checked</h4>
-                      <hr>
-                <div class="content">
-{{--                     <form action="{{action('PatientController@update',['id'=>$patient->id])}}" method="put">
-                      {!! csrf_field() !!}
-                        <div class="row">
-                          <div class="col-md-12">
-                              <div class="form-group">
-                                  <label>Date</label>
-                                  <input type="date" name="patient_birthday" class="form-control border-input">
-                              </div>
-                          </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-info btn-fill btn-wd">go</button>
-                        </div>
-                        <div class="clearfix"></div>
-                    </form> --}}
+    </div>
+  {{--  --}}
+  <?php $user_id = Auth::user()->id;
+  $role = App\UserRole::where('user_id','=',$user_id)->first();
+  if ($user_id == 1 || $role->role_id == 1) { ?>
+    <div class="col-md-12 col-md-12">
+      <div class="card">
+          <div  class="text-center">
+            <br>
+            <?php $patient = App\Patient::find($visit->patient_id); ?>
+
+            <h4 class="title"><b><a href="#">medical report</a><b></h4>
+            <hr>
+          </div>
+          <div class="content">
+            <div class="row">
+              <form action="{{'medical_report'}}" method="POST">
+                  <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                  <input type="hidden" name="visit_id" value="{{$visit->id}}"/>
+                  <input type="hidden" name="patient_id" value="{{$visit->patient_id}}"/>
+                    <div class="box-body">
+                      <div class="form-group col-md-12">
+                        <textarea rows="10" name="medical_report" cols="50">{{$visit->medical_report}}</textarea>
+                      </div>
+                      <div class="form-group text-center">
+                        {{Form::submit('Save Report',array('class' => 'btn btn-info btn-fill btn-wd'))}}
+                      </div>
+                      <!-- <div class="form-group text-center">
+                        <button type="button" class="btn  btn-fill btn-wd" name="button"><a href="{{URL::to('/print')}}"><i class="fa fa-print" aria-hidden="true"></i><a></button>
+                      </div> -->
+                    </div>
+              </form>
+              <form action="{{'print'}}" method="POST">
+                  <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                  <input type="hidden" name="visit_id" value="{{$visit->id}}"/>
+                  <input type="hidden" name="patient_id" value="{{$visit->patient_id}}"/>
+                  <input type="hidden" name="medical_report" value="$visit->medical_report"/>
+                    <div class="box-body">
+                      <div class="form-group text-center">
+                        {{Form::submit('print',array('class' => 'btn btn-fill btn-wd'))}}
+                    </div>
+              </form>
+          </div>
+      </div>
+      </div>
+    </div>
+    <?php
+  }else { ?>
+      <div class="col-md-12 col-md-12">
+        <div class="card">
+            <div  class="text-center">
+              <br>
+              <?php $patient = App\Patient::find($visit->patient_id); ?>
+
+              <h4 class="title"><b><a href="#">medical report</a><b></h4>
+              <hr>
+            </div>
+            <div class="content">
+              <div class="row">
+                <div class="box-body">
+                  <div class="form-group col-md-12">
+                    <blockquote><pre>{!!html_entity_decode($visit->medical_report)!!}</pre></blockquote>
+                  </div>
                 </div>
             </div>
         </div>
+        </div>
+        {{--  --}}
+      {{--  --}}
       </div>
-  {{--  --}}
-  <div class="col-md-12 col-md-12">
-    <div class="card">
-        <div  class="text-center">
-          <br>
-          <?php $patient = App\Patient::find($visit->patient_id); ?>
+    <?php } ?>
 
-          <h4 class="title"><b><a href="#">medical report</a><b></h4>
-          <hr>
-        </div>
-        <div class="content">
-          <div class="row">
-          <form action="{{'medical_report'}}" method="POST">
-              <input type="hidden" name="_token" value="{{csrf_token()}}" />
-              <input type="hidden" name="visit_id" value="{{$visit->id}}"/>
-              <input type="hidden" name="patient_id" value="{{$visit->patient_id}}"/>
-                <div class="box-body">
-                  <div class="form-group col-md-12">
-                    <textarea rows="10" name="medical_report" cols="50">{{$visit->medical_report}}</textarea>
-                  </div>
-                  <div class="form-group text-center">
-                    {{Form::submit('Save Report',array('class' => 'btn btn-info btn-fill btn-wd'))}}
-                  </div>
-                </div>
-          </form>
-        </div>
-    </div>
-    </div>
-    {{--  --}}
-  {{--  --}}
-  </div>
   </div>
 
   @endsection

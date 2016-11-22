@@ -1,13 +1,9 @@
 @extends('layouts.master')
-@section('titel','Dashboard')
+@section('titel','by patient')
 
 @section('content')
 <div class="content">
     <div class="row">
-      {{-- $patient $visit_date $stamp $work_time --}}
-      {{--  --}}
-
-      {{--  --}}
 
       <div class="col-lg-12 col-md-12" id="toggle-detail" >
           <div class="card"  >
@@ -19,8 +15,8 @@
               </div>
               <div class="content">
                   <form action="{{ url ('visit') }}" method="POST" enctype="multipart/form-data" >
-                    {!! csrf_field() !!}
-                      <div class="row">
+                    <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                    <div class="row">
                           <div class="col-md-5">
                               <div class="form-group">
                                   <label>Pationt</label>
@@ -44,6 +40,7 @@
                                   <div class="form-group">
                                       <label>Doctor</label>
                                       <select id="doctor_id" name="doctor_id" class="form-control border-input" required="true">
+                                        <option disabled selected value> -- select doctor -- </option>
                                           @foreach($user_role as $value)
                                           <?php
                                             $user = App\User::where('id','=',$value->user_id)->first();
@@ -89,9 +86,12 @@
                                 <label>checked</label><br>
                                   @foreach($checkeds as $value)
                                     <label required="true" class="checkbox-inline bg-info border-input">
-                                    <input tabindex="1"  type="checkbox" name="checked[]" id="{{$value->id}}" value="{{$value->id}}"><h5>{{$value->checked_name}}&nbsp;
+                                      <?php if ($value->id != 158) { ?>
+                                        <input tabindex="1"  type="checkbox" name="checked[]" id="{{$value->id}}" value="{{$value->id}}"><h5>{{$value->checked_name}}&nbsp;
+                                      <?php } ?>
                                     </h5></label>
                                   @endforeach
+                                  <input type="hidden" name="checked[]" value="158" />
                             </div>
                           </div>
                       </div>

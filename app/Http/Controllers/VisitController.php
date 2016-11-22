@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 use App\Work_time;
@@ -19,8 +20,28 @@ use App\Add_visit;
 use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
 
 
-class VisitController extends Controller
-{
+  class VisitController extends Controller
+  {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index()
+    {
+      $user_id = Auth::user()->id;
+      $role = UserRole::where('user_id','=',$user_id)->first();
+      if ($user_id == 1 || $role->role_id == 2) {
+        $visits = Visit::orderBy('created_at', 'desc')->paginate(15);
+        return view('visit.index', ['visits' => $visits]);
+      } else {
+        $visits = Visit::where('doctor_id','=',$user_id)->orderBy('created_at', 'desc')->paginate(15);
+        return view('visit.index', ['visits' => $visits]);
+      }
+
+      $visits = Visit::orderBy('created_at', 'desc')->paginate(15);
+      return view('visit.index', ['visits' => $visits]);
+    }
     public function visit_check(Request $request) //دالة لاختبار المدخلات من نمازج تسجيل الزيارات
     {
         // تفريغ المتغيرات المرسلة
@@ -54,54 +75,16 @@ class VisitController extends Controller
            } elseif(empty($patient) && empty($visit_date) && !empty($doctor)) {// في حالة إرسال البيانات من نموزج الطبيب
             echo "okok";
         }
-
-    }
-      /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     *->patient
-     *->visit_date
-     *->doctor_id
-     *->visit_time
-     *->checked
-     *->work_time
-     */
     public function store(Request $request)
     {
-     //
-        $rules = array(
-         'divisions_time_id' => 'required',
-         'checked[]' => 'required',
-         );
-         $validator = Validator::make(Input::all(), $rules);
-         if ($validator->fails())
-         {
-         Session::flash('message', 'error');
-          return Redirect::back();
-         } else {
-    //
+
       $input = $request->all();
       $patient = Input::get('patient');
       $visit_date = Input::get('visit_date');
@@ -154,7 +137,7 @@ class VisitController extends Controller
       }else{
          Session::flash('message', 'Date or Shift is not available');
          return Redirect::to('home');
-      }}
+      }
     }
 
     public function medical_report(Request $request)
@@ -170,7 +153,11 @@ class VisitController extends Controller
      $visit->save();
 
      $visit = Visit::find($visit_id);
-     return view ('visit.show',compact('visit',$visit));
+     $patient = Patient::where('id','=',$visit->patient_id)->first();
+     Session::flash('message', 'successfully');
+     return Redirect::route('visit.show', ['visit' =>  $visit, 'patient' => $patient]);
+
+    //  return view ('visit.show',compact('visit',$visit));
      }
 
 
@@ -180,15 +167,60 @@ class VisitController extends Controller
 
       $visit_id = Input::get('visit_id');
       $payment = Input::get('payment');
-      // $patient_id = Input::get('patient_id');
+      $visit_id = Input::get('visit_id');
 
       $visit = Visit::find($visit_id);
-      $visit->medical_report = $medical_report;
+      $visit_price = $visit->visit_price;
+      $paid = ($visit->visit_price) - ($visit->visit_paid);
+
+      if ($payment <= $paid) {
+
+      $visit->visit_paid = ($visit->visit_paid) + ($payment);
+
       $visit->save();
+      Session::flash('message', 'successfully');
+      $patient = Patient::where('id','=',$visit->patient_id)->first();
+      return Redirect::route('visit.show', ['visit' =>  $visit, 'patient' => $patient]);
 
-      $visit = Visit::find($visit_id);
-      return view ('visit.show',compact('visit',$visit));
+      // return view ('visit.show',compact('visit',$visit,'patient',$patient));
+
+      } else {
+        Session::flash('message', 'Erorr');
+        $patient = Patient::where('id','=',$visit->patient_id)->first();
+        return view ('visit.show',compact('visit',$visit,'patient',$patient));
       }
+      }
+
+
+      public function checked(Request $request)
+      {
+        $input = $request->all();
+
+       $visit_id = Input::get('visit_id');
+       $checked_id = Input::get('checked_id');
+
+      //  $visit = Visit::find($visit_id);
+      //  $checked = Checked::find($checked_id);
+       //add new add_visit
+       $new_add_visit = new Add_visit;
+        $new_add_visit->checked_id = $checked_id;
+        $new_add_visit->visit_id = $visit_id;
+       $new_add_visit->save();
+
+       // get checked_price
+       $checked = Checked::where('id','=',$checked_id)->first();
+         $checked_price = $checked->checked_price;
+
+       // +visit_price
+       $add_to_visit = Visit::find($visit_id);
+        $add_to_visit->visit_price = $add_to_visit->visit_price + $checked_price;
+       $add_to_visit->save();
+
+      Session::flash('message', 'You have successfully added checked');
+      $visit = $add_to_visit;
+      $patient = Patient::where('id','=',$visit->patient_id)->first();
+      return Redirect::route('visit.show', ['visit' =>  $visit, 'patient' => $patient]);
+    }
     /**
      * Display the specified resource.
      *
@@ -223,14 +255,16 @@ class VisitController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+      $visit = Visit::find($id);
+      $add_visits = Add_visit::where('visit_id','=',$id)->get();
+      foreach ($add_visits as $value) {
+        $value->delete();
+      }
+      $visit->delete();
+      // redirect
+      Session::flash('message', 'You have successfully deleted visit');
+      return Redirect::to('visit');
     }
 }

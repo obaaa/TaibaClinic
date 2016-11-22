@@ -83,10 +83,10 @@
                           <p>Dashboard</p>
                       </a>
                   </li>
-                  <li class="{{ Request::is('appointment') ? 'active' : '' }}">
-                      <a href="{{URL::to('/appointment')}}">
-                          <i class="ti-time"></i>
-                          <p>Appointments</p>
+                  <li class="{{ Request::is('visit') ? 'active' : '' }}">
+                      <a href="{{URL::to('/visit')}}">
+                          <i class="fa fa-calendar"></i>
+                          <p>visits</p>
                       </a>
                   </li>
                   <li class="{{ Request::is('patient*') ? 'active' : '' }}" >
@@ -95,24 +95,28 @@
                         <p>Patient</p>
                     </a>
                   </li>
-                  <li class="{{ Request::is('invoice') ? 'active' : '' }}">
+                  <!-- <li class="{{ Request::is('invoice') ? 'active' : '' }}">
                       <a href="{{URL::to('/invoice')}}">
                           <i class="ti-file"></i>
                           <p>Invoice</p>
                       </a>
-                  </li>
+                  </li> -->
                   <li class="{{ Request::is('expense') ? 'active' : '' }}">
                       <a href="{{URL::to('/expense')}}">
                           <i class="ti-wallet"></i>
                           <p>Expense</p>
                       </a>
                   </li>
+                  <?php $user_id = Auth::user()->id;
+                  $role = App\UserRole::where('user_id','=',$user_id)->first();
+                  if ($user_id == 1) { ?>
                   <li class="{{ Request::is('report') ? 'active' : '' }}">
                       <a href="{{URL::to('/report')}}">
                           <i class="ti-bar-chart-alt"></i>
                           <p>report</p>
                       </a>
                   </li>
+                  <?php } ?>
           <li class="active-pro">
                       <a href="HTTP://obaaa.sd" target="_blank">
                           <i class="ti-export"></i>
@@ -144,9 +148,13 @@
   															</a>
 
   															<ul class="dropdown-menu" role="menu">
+                                  <?php $user_id = Auth::user()->id;
+                                  $role = App\UserRole::where('user_id','=',$user_id)->first();
+                                  if ($user_id == 1) { ?>
   																	<li>
   																			<a href="{{ url('/settings') }}">settings</a>
   																	</li>
+                                  <?php } ?>
                                     <li>
                                         <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();

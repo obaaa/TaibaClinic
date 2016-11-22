@@ -37,8 +37,8 @@ class CreateVisitsTable extends Migration
             $table->integer('divisions_time_id')->unsigned();
             $table->foreign('divisions_time_id')->references('id')->on('divisions_times')->onDelete('cascade');
 
-            //$table->time('visit_time')->nullable();
-
+            $table->longText('medical_report')->nullable();
+            
             $table->timestamps();
         });
     }

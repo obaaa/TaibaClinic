@@ -40,16 +40,24 @@ Route::post('employee_work_time', 'Work_timeController@employee_work_time');
 
 Route::resource("visit", "VisitController");
 
+Route::resource("report", "ReportController");
+
 Route::POST('visit_check', 'VisitController@visit_check');
 
 Route::POST('visit/medical_report/', 'VisitController@medical_report');
 
-Route::POST('payment', 'VisitController@payment');
+Route::POST('visit/payment', 'VisitController@payment');
 
-Route::resource("appointment", "AppointmentController");
+Route::POST('visit/checked', 'VisitController@checked');
 
 Route::resource("shift_employees", "Shift_employeeController");
 
-// Route::get('/settings', function () {
-//     return view('settings');
-// });
+Route::resource("expense", "ExpenseController");
+
+Route::POST("report/visit", "ReportController@visit");
+
+Route::POST("report/doctor", "ReportController@doctor");
+
+Route::POST("report/expense", "ReportController@expense");
+
+Route::POST("visit/print", "ReportController@report_print");
