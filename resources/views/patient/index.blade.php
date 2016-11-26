@@ -12,10 +12,13 @@ function toggleDetail() {
 </script>
       {{--  --}}
       <div class="text-center">
+      @if (Session::has('message'))
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
+      @endif
         <div class="btn btn-primary btn-fill btn-wd" id="toggle-btn" onclick="toggleDetail()">Add Patient</div>
       </div><br>
       <div class="col-lg-12 col-md-12" id="toggle-detail" style="display:none;">
-          <div class="card"  >
+          <div class="card">
               <div class="header">
                   <h4 class="title">create patient</h4>
               </div>
@@ -110,7 +113,8 @@ function toggleDetail() {
         					<th class="patient_name text_align_center"><b>Name</b></th>
         					<th class="patient_gender text_align_center"><b>Gender</b></th>
         					<th class="patient_phone text_align_center"><b>Phone</b></th>
-        					<th class="patient_birthday text_align_center"><b>Birthday</b></th>
+                  <th class="patient_birthday text_align_center"><b>Birthday</b></th>
+                  <th class="delete text_align_center"><b>Delete</b></th>
         				</tr>
         			</thead>
         			<tbody>
@@ -121,6 +125,16 @@ function toggleDetail() {
                 <td class="patient_gender">{{$patient->patient_gender}}</td>
         				<td class="patient_phone text_align_center">{{$patient->patient_phone}}</td>
         				<td class="patient_birthday">{{$patient->patient_birthday}}</td>
+                <td class="delete">
+                  {{Form::open(array(
+                      'route' => array( 'patient.destroy', $patient->id ),
+                      'method' => 'delete',
+                      'style' => 'display:inline',
+                      'onsubmit' => "return confirm('Do you really want to delete the patient and related activities with it?')",
+                  ))}}
+                       {{Form::submit('Delete', array('class' => 'btn btn-danger'))}}
+                  {{Form::close()}}
+                </td>
         			</tr>
             @endforeach
         		</tbody>

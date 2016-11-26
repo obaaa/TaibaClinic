@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
       $this->call('ShiftTableSeeder');
       $this->call('DayTableSeeder');
       $this->call('RoleTableSeeder');
+      $this->call('CheckedTableSeeder');
   	}
 }

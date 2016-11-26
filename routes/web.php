@@ -54,6 +54,8 @@ Route::resource("shift_employees", "Shift_employeeController");
 
 Route::resource("expense", "ExpenseController");
 
+Route::resource("categorie", "CategorieController");
+
 Route::POST("report/visit", "ReportController@visit");
 
 Route::POST("report/doctor", "ReportController@doctor");

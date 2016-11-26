@@ -6,12 +6,6 @@ class DayTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.Saturday
-
-
-
-
-
-
      *
      * @return void
      */

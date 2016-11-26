@@ -49,6 +49,7 @@
                       <li><a href="{{ url ('employees') }}">Employees</a></li>
                       <li><a href="{{ url ('checkeds') }}">Checked</a></li>
                       <li><a href="{{ url ('work_times') }}">Work time</a></li>
+                      <li><a href="{{ url ('categorie') }}">Categorie</a></li>
                     </ul>
                 </ul>
 

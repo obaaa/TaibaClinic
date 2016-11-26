@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Patient;
 use App\Visit;
+use App\Add_visit;
+use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
+
 
 class PatientController extends Controller
 {
@@ -51,23 +54,35 @@ class PatientController extends Controller
      */
     public function store(Request $request)
     {
-      $patient_name = $request->input('patient_name');
-      $patient_gender = $request->input('patient_gender');
-      $patient_phone = $request->input('patient_phone');
-      $patient_blood = $request->input('patient_blood');
-      $patient_address = $request->input('patient_address');
-      $patient_birthday = $request->input('patient_birthday');
-      $patient_diseases = $request->input('patient_diseases');
+      $input = $request->all();
+
+      $patient_name = Input::get('patient_name');
+      $patient_gender = Input::get('patient_gender');
+      $patient_phone = Input::get('patient_phone');
+      $patient_blood = Input::get('patient_blood');
+      $patient_address = Input::get('patient_address');
+      $patient_birthday = Input::get('patient_birthday');
+      $patient_diseases = Input::get('patient_diseases');
+
+      $patient = Patient::where('patient_name','=',$patient_name)->first();
+      if (count($patient) != 0) {
+        Session::flash('message', 'This user already exists');
+        return Redirect::to('patient');
+      }
 
 
       $new_patient = new Patient;
-      $new_patient->patient_name = $request->patient_name;
-      $new_patient->patient_gender = $request->patient_gender;
-      $new_patient->patient_phone = $request->patient_phone;
-      $new_patient->patient_blood = $request->patient_blood;
-      $new_patient->patient_address = $request->patient_address;
-      $new_patient->patient_birthday = $request->patient_birthday;
-      $new_patient->patient_diseases = $request->patient_diseases;
+      if (!empty($patient_phone)) {
+        $new_patient->patient_phone = $input['patient_phone'];
+      }
+      if (!empty($patient_birthday)) {
+        $new_patient->patient_birthday = $input['patient_birthday'];
+      }
+      $new_patient->patient_name = $input['patient_name'];
+      $new_patient->patient_gender = $input['patient_gender'];
+      $new_patient->patient_blood = $input['patient_blood'];
+      $new_patient->patient_address = $input['patient_address'];
+      $new_patient->patient_diseases = $input['patient_diseases'];
 
 
       $new_patient->save();
@@ -146,6 +161,19 @@ class PatientController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $patient = Patient::find($id);
+      $visits = Visit::where('patient_id','=',$id)->get();
+      foreach ($visits as $visit) {
+        $add_visits = Add_visit::where('visit_id','=',$visit->id)->get();
+        foreach ($add_visits as $value) {
+          $value->delete();
+        }
+        $visit->delete();
+      }
+      $patient->delete();
+
+      // redirect
+      Session::flash('message', 'You have successfully deleted patient');
+      return Redirect::to('patient');
     }
 }

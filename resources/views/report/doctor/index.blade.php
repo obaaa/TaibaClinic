@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="{{ asset("css/report.css") }}" />
 <header class="clearfix">
-      <div id="logo">
-         <h1>Taiba-Clinic</h1>
-        <!-- <img src="{{ asset("assets/img/3.png") }}"> -->
-      </div>
+      {{-- <div id="logo"> --}}
+         {{-- <h1>Taiba-Clinic</h1> --}}
+         <img style="margin: auto; display: block;" height="100px" width="250px" src="{{asset('assets/img/logo.png')}}" alt="{{ config('app.name', 'Laravel') }}">
+      {{-- </div> --}}
 
       <h1>{{App\User::find($doctor_id)->name}} : [ {{$from_date}} ] to [ {{$to_date}} ]</h1>
     <main>
@@ -54,8 +54,8 @@
             </tr>
         </tbody>
       </table>
-      <div id="notices">
-        <div>repotr:</div>
+      <div id="notices"><h1></h1>
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx[Taiba Center: www.obaaa.sd]xxxx
         <div class="notice"> .</div>
       </div>
     </main>

@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="<?php echo e(asset("css/report.css")); ?>" />
 <header class="clearfix">
-      <div id="logo">
-         <h1>Taiba-Clinic</h1>
-        <!-- <img src="<?php echo e(asset("assets/img/3.png")); ?>"> -->
-      </div>
+      
+         
+         <img style="margin: auto; display: block;" height="100px" width="250px" src="<?php echo e(asset('assets/img/logo.png')); ?>" alt="<?php echo e(config('app.name', 'Laravel')); ?>">
+      
 
       <h1><?php echo e(App\User::find($doctor_id)->name); ?> : [ <?php echo e($from_date); ?> ] to [ <?php echo e($to_date); ?> ]</h1>
     <main>
@@ -58,8 +58,8 @@
             </tr>
         </tbody>
       </table>
-      <div id="notices">
-        <div>repotr:</div>
+      <div id="notices"><h1></h1>
+        xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx[Taiba Center: www.obaaa.sd]xxxx
         <div class="notice"> .</div>
       </div>
     </main>

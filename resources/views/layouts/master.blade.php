@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+  {{-- <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png"> --}}
+  {{-- <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png"> --}}
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta charset="utf-8">
 
@@ -72,8 +72,8 @@
 
         <div class="sidebar-wrapper">
               <div class="logo">
-                  <a href="/home" class="simple-text">
-                      {{ config('app.name', 'Laravel') }}
+                  <a href="{{URL::to('/home')}}" class="simple-text">
+                  <img style="margin: auto; display: block;" height="70px" width="200px" src="{{asset('assets/img/logo.png')}}" alt="{{ config('app.name', 'Laravel') }}">
                   </a>
               </div>
               <ul class="nav">
@@ -95,10 +95,10 @@
                         <p>Patient</p>
                     </a>
                   </li>
-                  <!-- <li class="{{ Request::is('invoice') ? 'active' : '' }}">
-                      <a href="{{URL::to('/invoice')}}">
-                          <i class="ti-file"></i>
-                          <p>Invoice</p>
+                  <!--<li class="{{ Request::is('categorie') ? 'active' : '' }}">
+                      <a href="{{URL::to('/categorie')}}">
+                          <i class="ti-pin-alt"></i>
+                          <p>Categorie</p>
                       </a>
                   </li> -->
                   <li class="{{ Request::is('expense') ? 'active' : '' }}">
@@ -119,8 +119,7 @@
                   <?php } ?>
           <li class="active-pro">
                       <a href="HTTP://obaaa.sd" target="_blank">
-                          <i class="ti-export"></i>
-                          <p>ABOUT US</p>
+                          <img style="margin: auto; display: block;" height="80px" width="40px" src="{{asset('assets/img/taiba.png')}}" alt="{{ config('app.name', 'Laravel') }}">
                       </a>
                   </li>
               </ul>

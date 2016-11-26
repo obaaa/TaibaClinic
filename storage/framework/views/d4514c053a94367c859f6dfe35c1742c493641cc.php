@@ -39,7 +39,7 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label for="exampleInputPhone">Phone</label>
-                                    <input type="number" name="patient_phone" value="<?php echo e($patient->patient_phone); ?>" class="edit form-control border-input" placeholder="phone">
+                                    <input type="phone" name="patient_phone" value="<?php echo e($patient->patient_phone); ?>" class="edit form-control border-input" placeholder="phone">
                                 </div>
                             </div>
                             <div class="col-md-2">

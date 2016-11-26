@@ -49,6 +49,7 @@
                       <li><a href="<?php echo e(url ('employees')); ?>">Employees</a></li>
                       <li><a href="<?php echo e(url ('checkeds')); ?>">Checked</a></li>
                       <li><a href="<?php echo e(url ('work_times')); ?>">Work time</a></li>
+                      <li><a href="<?php echo e(url ('categorie')); ?>">Categorie</a></li>
                     </ul>
                 </ul>
 

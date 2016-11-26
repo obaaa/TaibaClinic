@@ -11,10 +11,13 @@ function toggleDetail() {
 </script>
       
       <div class="text-center">
+      <?php if(Session::has('message')): ?>
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><p class="alert <?php echo e(Session::get('alert-class', 'alert-info')); ?>"><?php echo e(Session::get('message')); ?></p>
+      <?php endif; ?>
         <div class="btn btn-primary btn-fill btn-wd" id="toggle-btn" onclick="toggleDetail()">Add Patient</div>
       </div><br>
       <div class="col-lg-12 col-md-12" id="toggle-detail" style="display:none;">
-          <div class="card"  >
+          <div class="card">
               <div class="header">
                   <h4 class="title">create patient</h4>
               </div>
@@ -110,7 +113,8 @@ function toggleDetail() {
         					<th class="patient_name text_align_center"><b>Name</b></th>
         					<th class="patient_gender text_align_center"><b>Gender</b></th>
         					<th class="patient_phone text_align_center"><b>Phone</b></th>
-        					<th class="patient_birthday text_align_center"><b>Birthday</b></th>
+                  <th class="patient_birthday text_align_center"><b>Birthday</b></th>
+                  <th class="delete text_align_center"><b>Delete</b></th>
         				</tr>
         			</thead>
         			<tbody>
@@ -121,6 +125,19 @@ function toggleDetail() {
                 <td class="patient_gender"><?php echo e($patient->patient_gender); ?></td>
         				<td class="patient_phone text_align_center"><?php echo e($patient->patient_phone); ?></td>
         				<td class="patient_birthday"><?php echo e($patient->patient_birthday); ?></td>
+                <td class="delete">
+                  <?php echo e(Form::open(array(
+                      'route' => array( 'patient.destroy', $patient->id ),
+                      'method' => 'delete',
+                      'style' => 'display:inline',
+                      'onsubmit' => "return confirm('Do you really want to delete the patient and related activities with it?')",
+                  ))); ?>
+
+                       <?php echo e(Form::submit('Delete', array('class' => 'btn btn-danger'))); ?>
+
+                  <?php echo e(Form::close()); ?>
+
+                </td>
         			</tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getFirstLoop(); ?>
         		</tbody>

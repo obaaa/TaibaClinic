@@ -100,13 +100,17 @@
           </style>
           <div class="container">
             <div class="logo">
-              <p>{{ config('app.name', 'Laravel') }}</p>
+              <div class="row">
+                <br><br>
+                  <img style="margin: auto; display: block;" height="150px" width="350px" src="{{asset('assets/img/logo.png')}}" alt="LOGO">
+              </div>
+              {{-- <p>{{ config('app.name', 'Laravel') }}</p> --}}
             </div>
               <div class="row">
           <div class="login">
     {{-- <div class="login-triangle"></div> --}}
 
-    <h2 class="login-header">Log in</h2>
+    <h2 class="login-header">Taiba Center</h2>
 
     <form class="login-container" method="POST" action="{{ url('/login') }}" >
       {{ csrf_field() }}
@@ -131,6 +135,13 @@
     <p><a class="btn btn-link" href="{{ url('/password/reset') }}">Forgot Your Password?</a></p>
     </form>
     </div>
+
+    <a class="btn btn-link" target="blank" href="http://www.obaaa.sd" style="margin: auto; display: block; height: 95px; width: 50px; " >
+    <img
+    height="95px" width="50px" src="{{asset('assets/img/taiba.png')}}" alt="obaaa" href="obaaa.sd">
+    </a>
+    <br>
+    <div style=" text-align: center;"><b>TAIBA-CLINICS version: 0.8</b></div>
     <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
     </div>
 </div>
