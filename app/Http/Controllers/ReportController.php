@@ -57,6 +57,18 @@ class ReportController extends Controller
       return view('report.doctor.index',compact('visits',$visits,'doctor_id',$doctor_id,'from_date',$from_date,'to_date',$to_date));
     }
     // ------------------------------------------------------
+    public function visit_by_categorie(Request $request)
+    {
+      $input = $request->all();
+      $from_date = Input::get('from_date');
+      $to_date = Input::get('to_date');
+      $categorie_id = Input::get('categorie_id');
+
+      $visits = Visit::where('visit_date','>=',$from_date)->where('visit_date','<=',$to_date)->get();
+
+      return view('report.visit_by_categorie.index',compact('categorie_id',$categorie_id,'visits',$visits,'from_date',$from_date,'to_date',$to_date));
+    }
+    // ------------------------------------------------------
     public function expense(Request $request)
     {
       $input = $request->all();
@@ -83,6 +95,13 @@ class ReportController extends Controller
 
 
       return view('report/medical_report.index', compact('visit',$visit,'patient',$patient,'medical_report',$medical_report));
+    }
+    // ------------------------------------------------------
+    public function report_bill($id)
+    {
+      $visit = Visit::find($id);
+
+      return view('report/report_bill.index', compact('visit',$visit));
     }
 
 }

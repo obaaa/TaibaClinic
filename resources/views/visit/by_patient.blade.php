@@ -86,16 +86,17 @@
                                 <label>checked</label><br>
                                   @foreach($checkeds as $value)
                                     <label required="true" class="checkbox-inline bg-info border-input">
-                                      <?php if ($value->id != 158) { ?>
-                                        <input tabindex="1"  type="checkbox" name="checked[]" id="{{$value->id}}" value="{{$value->id}}"><h5>{{$value->checked_name}}&nbsp;
+                                      <?php if ($value->id != 1) { ?>
+                                        <input tabindex="1" type="checkbox" name="checked[]" id="{{$value->id}}" value="{{$value->id}}"><h5>{{$value->checked_name}}&nbsp;
                                       <?php } ?>
                                     </h5></label>
                                   @endforeach
-                                  <input type="hidden" name="checked[]" value="158" />
+                                  <input type="hidden" name="checked[]" value="1" />
                             </div>
                           </div>
                       </div>
                       <input type="hidden" name="work_time_id" value="{{$work_time->id}}">
+                      <input type="hidden" name="discount" value="0" />
                       <div class="text-center">
                           <button type="submit" class="btn btn-info btn-fill btn-wd">Go</button>
                       </div>

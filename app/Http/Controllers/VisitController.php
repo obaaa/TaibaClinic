@@ -16,6 +16,8 @@ use App\Patient;
 use App\Visit;
 use App\Divisions_time;
 use App\Add_visit;
+use App\Lab;
+use Image;
 
 use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
 
@@ -77,9 +79,46 @@ use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
         }
     }
 
-    public function create()
+    public function visit_image(Request $request)
     {
-        //
+      $input = $request->all();
+      $visit_id = Input::get('visit_id');
+
+      if($request->hasFile('visit_image')){
+        $visit_image = $request->file('visit_image');
+        $filename = time() . '.' . $visit_image->getClientOriginalExtension();
+        // Image::make($visit_image)->resize(200, 200)->save(public_path('/uploads/visit_images/' . $filename));
+        Image::make($visit_image)->save(public_path('/uploads/visit_images/' . $filename));
+
+        $new_image = Visit::find($visit_id);
+        $new_image->visit_image = $filename;
+        $new_image->save();
+      }
+      $visit = Visit::find($visit_id);
+      $patient = Patient::where('id','=',$visit->patient_id)->first();
+      Session::flash('message', 'successfully');
+      return Redirect::route('visit.show', ['visit' =>  $visit, 'patient' => $patient]);
+    }
+
+    public function add_to_lab(Request $request)
+    {
+
+      $input = $request->all();
+      $lab_type = Input::get('lab_type');
+      $lab_description = Input::get('lab_description');
+      $visit_id = Input::get('visit_id');
+
+      $new_lab = new Lab;
+      $new_lab->lab_type = $lab_type;
+      $new_lab->lab_description = $lab_description;
+      $new_lab->visit_id = $visit_id;
+      $new_lab->lab_status = "In wait";
+      $new_lab->save();
+
+      $visit = Visit::find($visit_id);
+      $patient = Patient::where('id','=',$visit->patient_id)->first();
+      Session::flash('message', 'successfully');
+      return Redirect::route('visit.show', ['visit' =>  $visit, 'patient' => $patient]);
     }
 
     public function store(Request $request)
@@ -91,7 +130,12 @@ use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
       $doctor_id = Input::get('doctor_id');
       $divisions_time_id = Input::get('divisions_time_id');
       $work_time_id = Input::get('work_time_id');
+      $discount = Input::get('discount');
 
+      if (count($divisions_time_id) == 0) {
+        Session::flash('message', 'select time');
+        return Redirect::to('home');
+      }
 
       $patient = Patient::where('patient_name','=',$patient)->first();
       $patient_id = $patient->id;
@@ -105,6 +149,7 @@ use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
        $new_visit->work_time_id = $work_time_id;
        //$new_visit->visit_price =
        $new_visit->visit_paid = 0;
+       $new_visit->discount = $discount;
        $new_visit->visit_date = $visit_date;
        $new_visit->divisions_time_id = $divisions_time_id;
        $new_visit->save();
@@ -128,9 +173,15 @@ use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
 
         // +visit_price
         $add_to_visit = Visit::find($visit_id);
-         $add_to_visit->visit_price = $add_to_visit->visit_price + $checked_price;
+        $add_to_visit->visit_price = $add_to_visit->visit_price + $checked_price;
         $add_to_visit->save();
+
        }
+
+       $add_to_visit = Visit::find($visit_id);
+       $add_to_visit->visit_price = $add_to_visit->visit_price - (($add_to_visit->visit_price * $discount)/100);
+       $add_to_visit->save();
+
        Session::flash('message', 'You have successfully added visit');
        return redirect()->action('PatientController@show', ['id' => $patient_id]);
 
@@ -167,27 +218,38 @@ use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
 
       $visit_id = Input::get('visit_id');
       $payment = Input::get('payment');
-      $visit_id = Input::get('visit_id');
+      $discount = Input::get('discount');
 
       $visit = Visit::find($visit_id);
       $visit_price = $visit->visit_price;
-      $paid = ($visit->visit_price) - ($visit->visit_paid);
+
+      $price = $visit_price - (($visit_price * $discount)/100);
+      $visit->visit_price = $price;
+      $paid = $price - ($visit->visit_paid);
 
       if ($payment <= $paid) {
 
-      $visit->visit_paid = ($visit->visit_paid) + ($payment);
-
+        $visit->visit_paid = ($visit->visit_paid) + ($payment);
+        if ($discount != 0) {
+          $visit->discount = $discount;
+        }
       $visit->save();
+
       Session::flash('message', 'successfully');
       $patient = Patient::where('id','=',$visit->patient_id)->first();
-      return Redirect::route('visit.show', ['visit' =>  $visit, 'patient' => $patient]);
+
+      $labs = Lab::where('visit_id','=',$visit->id)->get();
+      return view('visit.show', ['visit' =>  $visit, 'patient' => $patient, 'labs' => $labs]);
+
+      // return Redirect::route('visit.show', ['visit' =>  $visit, 'patient' => $patient]);
 
       // return view ('visit.show',compact('visit',$visit,'patient',$patient));
 
       } else {
         Session::flash('message', 'Erorr');
         $patient = Patient::where('id','=',$visit->patient_id)->first();
-        return view ('visit.show',compact('visit',$visit,'patient',$patient));
+        $labs = Lab::where('visit_id','=',$visit->id)->get();
+        return view('visit.show', ['visit' =>  $visit, 'patient' => $patient, 'labs' => $labs]);
       }
       }
 
@@ -230,7 +292,9 @@ use \Auth, \Redirect, \Validator, \Input, \Session, \Hash;
     public function show($id)
     {
      $visit = Visit::find($id);
-     return view ('visit.show',compact('visit',$visit));
+     $labs = Lab::where('visit_id','=',$visit->id)->get();
+     $patient = Patient::where('id','=',$visit->patient_id)->first();
+     return view('visit.show', ['visit' =>  $visit, 'patient' => $patient, 'labs' => $labs]);
     }
 
     /**

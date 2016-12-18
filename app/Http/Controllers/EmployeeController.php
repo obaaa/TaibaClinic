@@ -168,7 +168,7 @@ class EmployeeController extends Controller {
 	{
 		if($id == 1)
 		{
-			Session::flash('message', 'You cannot delete admin on TutaPOS demo');
+			Session::flash('message', 'You cannot delete admin on Taiba-Clinics');
 			Session::flash('alert-class', 'alert-danger');
 	            return Redirect::to('employees');
 		}
@@ -177,7 +177,9 @@ class EmployeeController extends Controller {
 			try
 			{
 				$users = User::find($id);
-		        $users->delete();
+					$user_role = UserRole::where('user_id','=',$id)->first();
+						$user_role->delete();
+		      $users->delete();
 		        // redirect
 		        Session::flash('message', 'You have successfully deleted employee');
 		        return Redirect::to('employees');

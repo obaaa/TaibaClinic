@@ -14,6 +14,7 @@ return array(
     'CreateDivisionsTimesTable' => $baseDir . '/database/migrations/2016_10_21_081006_create_divisions_times_table.php',
     'CreateEmployeeWorkTimesTable' => $baseDir . '/database/migrations/2016_11_09_153527_create_employee_work_times_table.php',
     'CreateExpensesTable' => $baseDir . '/database/migrations/2016_06_24_143742_create_expenses_table.php',
+    'CreateLabsTable' => $baseDir . '/database/migrations/2016_11_29_131515_create_labs_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePatientsTable' => $baseDir . '/database/migrations/2016_10_05_095951_create_patients_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2015_12_18_070318_create_roles_table.php',

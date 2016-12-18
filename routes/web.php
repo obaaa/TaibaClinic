@@ -58,8 +58,20 @@ Route::resource("categorie", "CategorieController");
 
 Route::POST("report/visit", "ReportController@visit");
 
+Route::POST("report/visit_by_categorie", "ReportController@visit_by_categorie");
+
 Route::POST("report/doctor", "ReportController@doctor");
 
 Route::POST("report/expense", "ReportController@expense");
 
 Route::POST("visit/print", "ReportController@report_print");
+
+Route::get('/report_bill/{id}', 'ReportController@report_bill');
+
+Route::post('visit/visit_image', 'VisitController@visit_image');
+
+Route::post('visit/lab', 'LabController@add_to_lab');
+
+Route::post('lab_update', 'LabController@lab_update');
+
+Route::resource("lab", "LabController");

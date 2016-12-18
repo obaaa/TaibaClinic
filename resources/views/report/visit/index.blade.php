@@ -17,6 +17,7 @@
             <th><b>Day | Time</b></th>
             <th><b>Doctor</b></th>
             <th><b>Status</b></th>
+            <th><b>discount</b></th>
             <th><b>value | pid</b></th>
           </tr>
         </thead>
@@ -50,6 +51,7 @@
                   <b>complete</b>
                 <?php endif; ?>
               </td>
+              <td>{{$value->discount}}</td>
               <td>
                 {{$value->visit_price}} | {{$value->visit_paid}}
                 <?php
@@ -62,17 +64,19 @@
             </tr>
             @endforeach
             <tr>
-              <td colspan="5" class="grand total">TOTAL Remaining</td>
+              <td colspan="6" class="grand total">TOTAL Remaining</td>
               <td class="grand total">{{$total_remaining}}</td>
             </tr>
             <tr>
-              <td colspan="5" class="grand total">TOTAL Paid </td>
+              <td colspan="6" class="grand total">TOTAL Paid </td>
               <td class="grand total">{{$total_paid}}</td>
             </tr>
+
             <tr>
-              <td colspan="5" class="grand total">TOTAL</td>
+              <td colspan="6" class="grand total">TOTAL</td>
               <td class="grand total">{{$total}}</td>
             </tr>
+
         </tbody>
       </table>
       <div id="notices"><h1></h1>

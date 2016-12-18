@@ -2,22 +2,49 @@
 @section('titel','employees')
 
 @section('content')
-<div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
-			<div class="panel panel-default">
-				<div class="panel-heading">settings</div>
-
-				<div class="panel-body">
-				<!-- <a class="btn btn-small btn-success" href="{{ URL::to('employees/create') }}">New Employee</a> -->
-				<hr />
-@if (Session::has('message'))
-	<p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
-@endif
-
-				</div>
-			</div>
-		</div>
+<div class="content" style="float:center;">
+<div class="row">
+	<div class="col-md-2">
 	</div>
+		<div class="col-md-8">
+<a class="btn btn-link" target="blank" href="http://www.obaaa.sd">
+	<img style="float:center;" class="img-responsive" src="{{asset('obaaa.jpg')}}" alt="obaaa" ></a>
+</div>
+<div class="col-md-2">
+</div>
+</div>
+<br>
+
+<div class="row">
+	<div class="col-md-2">
+	</div>
+<div class="col-md-8">
+<div id="front-columns">
+
+	<div class="col-xs-4" dir="rtl">
+
+		<h3 >أفكار نحو الكمال</h3>
+
+		<p> مجموعة من الشباب المتحمس خلف أوبااا؛ ليقدمو لكم مواقع إنترنت وتطبيقات خدمية، معتمدين على أدوات حرة، وبأفكار تقودكم نحو الكمال.</p>
+	</div>
+	<div class="col-xs-4" dir="rtl">
+
+		<h3>
+			رؤيتنا
+		</h3>
+
+		<p>تمكين الاشخاص والمؤسسات من دخول عالم التقنية والتعامل معها والاستفادة منها, بطرق آمنه ورخيصة.</p>
+	</div>
+
+<div class="col-xs-4" dir="rtl">
+
+		<h3>أوبااا</h3>
+
+		<p>نقوم بتصميم وبرمجة مواقع ويب وتطبيقات خدمية معتمدين على تقنيات حرة. كما نحمل مسؤولية إجتماعية لنشر وتمكين المعرفة للجميع.</p>
+	</div>
+</div>
+</div>
+<div class="col-md-2">
+</div>
 </div>
 @endsection

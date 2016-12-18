@@ -63,6 +63,7 @@ class PatientController extends Controller
       $patient_address = Input::get('patient_address');
       $patient_birthday = Input::get('patient_birthday');
       $patient_diseases = Input::get('patient_diseases');
+      $categorie_id = Input::get('categorie_id');
 
       $patient = Patient::where('patient_name','=',$patient_name)->first();
       if (count($patient) != 0) {
@@ -83,6 +84,7 @@ class PatientController extends Controller
       $new_patient->patient_blood = $input['patient_blood'];
       $new_patient->patient_address = $input['patient_address'];
       $new_patient->patient_diseases = $input['patient_diseases'];
+      $new_patient->categorie_id = $input['categorie_id'];
 
 
       $new_patient->save();
@@ -136,6 +138,10 @@ class PatientController extends Controller
       $patient_birthday = $request->input('patient_birthday');
       $patient_diseases = $request->input('patient_diseases');
       $patient_address = $request->input('patient_address');
+      $categorie_id = $request->input('categorie_id');
+
+      $patient_phone = (!empty($patient_phone)) ? $patient_phone : NULL;
+      $patient_birthday = (!empty($patient_birthday)) ? $patient_birthday : NULL;
 
 
       $patient = Patient::find($id);
@@ -146,6 +152,7 @@ class PatientController extends Controller
       $patient->patient_birthday = $patient_birthday;
       $patient->patient_diseases = $patient_diseases;
       $patient->patient_address = $patient_address;
+      $patient->categorie_id = $categorie_id;
       $patient->save();
 
       $visits = Visit::where('patient_id','=',$id)->get();

@@ -10,10 +10,11 @@ class ComposerStaticInit6f6a485f5cad68ca455dd7c04c1976c9
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
-        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'f18cc91337d49233e5754e93f3ed9ec3' => __DIR__ . '/..' . '/laravelcollective/html/src/helpers.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
@@ -60,6 +61,7 @@ class ComposerStaticInit6f6a485f5cad68ca455dd7c04c1976c9
         array (
             'Psy\\' => 4,
             'Psr\\Log\\' => 8,
+            'Psr\\Http\\Message\\' => 17,
             'PhpParser\\' => 10,
         ),
         'M' => 
@@ -72,7 +74,12 @@ class ComposerStaticInit6f6a485f5cad68ca455dd7c04c1976c9
         ),
         'I' => 
         array (
+            'Intervention\\Image\\' => 19,
             'Illuminate\\' => 11,
+        ),
+        'G' => 
+        array (
+            'GuzzleHttp\\Psr7\\' => 16,
         ),
         'F' => 
         array (
@@ -103,8 +110,8 @@ class ComposerStaticInit6f6a485f5cad68ca455dd7c04c1976c9
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -194,6 +201,10 @@ class ComposerStaticInit6f6a485f5cad68ca455dd7c04c1976c9
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
+        'Psr\\Http\\Message\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
@@ -206,9 +217,17 @@ class ComposerStaticInit6f6a485f5cad68ca455dd7c04c1976c9
         array (
             0 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
+        'Intervention\\Image\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/intervention/image/src/Intervention/Image',
+        ),
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
+        ),
+        'GuzzleHttp\\Psr7\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
         'Faker\\' => 
         array (
@@ -319,6 +338,7 @@ class ComposerStaticInit6f6a485f5cad68ca455dd7c04c1976c9
         'CreateDivisionsTimesTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_21_081006_create_divisions_times_table.php',
         'CreateEmployeeWorkTimesTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_09_153527_create_employee_work_times_table.php',
         'CreateExpensesTable' => __DIR__ . '/../..' . '/database/migrations/2016_06_24_143742_create_expenses_table.php',
+        'CreateLabsTable' => __DIR__ . '/../..' . '/database/migrations/2016_11_29_131515_create_labs_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreatePatientsTable' => __DIR__ . '/../..' . '/database/migrations/2016_10_05_095951_create_patients_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2015_12_18_070318_create_roles_table.php',

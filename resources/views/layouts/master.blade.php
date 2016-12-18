@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  {{-- <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png"> --}}
-  {{-- <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png"> --}}
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta charset="utf-8">
 
@@ -21,9 +19,8 @@
  <script src="{!!asset('/assets/tinymce/themes/modern/theme.min.js')!!}"></script>
   <script>tinymce.init({ selector:'textarea' });</script>
 {{--  --}}
-<script src="{!!asset('/assets/dist/css/summernote.css')!!}"></script>
-
- <script src="{!!asset('/assets/js/summernote.min.js')!!}"></script>
+<!-- <script src="{!!asset('/assets/dist/css/summernote.css')!!}"></script> -->
+ <!-- <script src="{!!asset('/assets/js/summernote.min.js')!!}"></script> -->
 {{--  --}}
   <script>
       window.Laravel = <?php echo json_encode([
@@ -35,8 +32,6 @@
     <meta name="viewport" content="width=device-width" />
 
 {{--  --}}
-<link rel='stylesheet prefetch' href="{{URL::asset('http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.min.css')}}">
-<link rel='stylesheet prefetch' href="{{URL::asset('http://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css')}}">
 
 <link rel="stylesheet" href="{{URL::asset('css/style.css')}}">
 
@@ -52,7 +47,7 @@
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{URL::asset('assets/css/demo.css')}}" rel="stylesheet" />
-    <link href="/css/filter.css" rel="stylesheet" />
+    <link href="{{URL::asset('/css/filter.css')}}" rel="stylesheet" />
 
     <!--  Fonts and icons     -->
     <link href="{{URL::asset('assets/css/font-awesome.min.css')}}" rel="stylesheet">
@@ -95,12 +90,12 @@
                         <p>Patient</p>
                     </a>
                   </li>
-                  <!--<li class="{{ Request::is('categorie') ? 'active' : '' }}">
-                      <a href="{{URL::to('/categorie')}}">
-                          <i class="ti-pin-alt"></i>
-                          <p>Categorie</p>
+                  <li class="{{ Request::is('lab') ? 'active' : '' }}">
+                      <a href="{{URL::to('/lab')}}">
+                          <i class="ti-timer"></i>
+                          <p>Lab</p>
                       </a>
-                  </li> -->
+                  </li>
                   <li class="{{ Request::is('expense') ? 'active' : '' }}">
                       <a href="{{URL::to('/expense')}}">
                           <i class="ti-wallet"></i>
@@ -119,7 +114,7 @@
                   <?php } ?>
           <li class="active-pro">
                       <a href="HTTP://obaaa.sd" target="_blank">
-                          <img style="margin: auto; display: block;" height="80px" width="40px" src="{{asset('assets/img/taiba.png')}}" alt="{{ config('app.name', 'Laravel') }}">
+                          <img style="margin: auto; display: block;" height="90px" width="55px" src="{{asset('assets/img/taiba.png')}}" alt="{{ config('app.name', 'Laravel') }}">
                       </a>
                   </li>
               </ul>
@@ -151,7 +146,7 @@
                                   $role = App\UserRole::where('user_id','=',$user_id)->first();
                                   if ($user_id == 1) { ?>
   																	<li>
-  																			<a href="{{ url('/settings') }}">settings</a>
+  																			<a target="_blank" href="{{ url('/settings') }}">settings</a>
   																	</li>
                                   <?php } ?>
                                     <li>
@@ -212,7 +207,7 @@
   <script src="{{URL::asset('assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
 
   <!--  Checkbox, Radio & Switch Plugins -->
-  <script src="{{URL::asset('assets/js/bootstrap-checkbox-radio.js')}}"></script>
+  <!-- <script src="{{URL::asset('assets/js/bootstrap-checkbox-radio.js')}}"></script> -->
 
   <!--  Charts Plugin -->
   <script src="{{URL::asset('assets/js/chartist.min.js')}}"></script>
@@ -226,17 +221,10 @@
   <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="{{URL::asset('assets/js/demo.js')}}"></script>
   <script src="{{URL::asset('assets/js/edit.js')}}"></script>
-  <script src="js/filter.js"></script>
+  <script src="{{URL::asset('js/filter.js')}}"></script>
 
 {{--  --}}
-{{-- <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.0/bootstrap-table.js'></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/editable/bootstrap-table-editable.js'></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/export/bootstrap-table-export.js'></script>
-<script src='http://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js'></script>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.9.1/extensions/filter-control/bootstrap-table-filter-control.js'></script>
-
-      <script src="{{URL::asset('js/index.js')}}"></script> --}}
+{{----}}
       {{--  --}}
   <script type="text/javascript">
       $(document).ready(function() {

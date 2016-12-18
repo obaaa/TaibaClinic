@@ -65,11 +65,25 @@
                                   <input type="text" name="patient_address" value="{{$patient->patient_address}}" class="edit form-control border-input" placeholder="Home Address">
                               </div>
                           </div>
-                          <div class="col-md-4">
+                          <div class="col-md-2">
                               <div class="form-group">
                                   <label>Birthday</label>
                                   <input type="date" name="patient_birthday" value="{{$patient->patient_birthday}}" class="edit form-control border-input">
                               </div>
+                          </div>
+                          <div class="col-md-2">
+                              <div class="form-group">
+                                  <label>categorie</label>
+                                  <select name="categorie_id" class="edit form-control border-input">
+                                    <option selected value="{{$patient->categorie_id}}">{{App\Categorie::find($patient->categorie_id)->categorie_name}}</option>
+                                    <?php $categories = App\Categorie::all(); ?>
+                                    <?php foreach ($categories as $value): ?>
+                                      @<?php if ($patient->categorie_id != $value->id ): ?>
+                                        <option value="{{$value->id}}">{{$value->categorie_name}}</option>
+                                      <?php endif; ?>
+                                    <?php endforeach; ?>
+                                  </select>
+                                </div>
                           </div>
                         </div>
 
@@ -143,8 +157,8 @@
                     <th class="day text_align_center"><b>Day</b></th>
                     <th class="time text_align_center"><b>Time</b></th>
           					<th class="doctor text_align_center"><b>Doctor</b></th>
-          					<th class="visit_value text_align_center"><b>Visit_value</b></th>
-                    <th class="visit_pid text_align_center"><b>Visit_pid</b></th>
+          					<th class="visit_value text_align_center"><b>Cost</b></th>
+                    <th class="remained text_align_center"><b>Remained</b></th>
           				</tr>
           			</thead>
           			<tbody>
@@ -171,8 +185,8 @@
           				<td class="visit_value text_align_center">
                     {{$value->visit_price}}
                   </td>
-                  <td class="visit_pid">
-                    {{$value->visit_paid}}
+                  <td class="remained">
+                    {{$value->visit_price - $value->visit_paid}}
                   </td>
           			</tr>
                 @endforeach

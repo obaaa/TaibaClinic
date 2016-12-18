@@ -34,11 +34,14 @@ class CreateVisitsTable extends Migration
 
             $table->date('visit_date')->nullable();
 
+            $table->string('visit_image')->nullable();
+
+
             $table->integer('divisions_time_id')->unsigned();
             $table->foreign('divisions_time_id')->references('id')->on('divisions_times')->onDelete('cascade');
 
             $table->longText('medical_report')->nullable();
-            
+
             $table->timestamps();
         });
     }

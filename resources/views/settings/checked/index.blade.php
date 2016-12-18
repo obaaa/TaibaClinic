@@ -27,19 +27,21 @@
     <tbody>
 			<?php $i = 1; ?>
     @foreach($checkeds as $value)
-        <tr>
-            <td>{{ $i }}</td>
-            <td>{{ $value->checked_name }}</td>
-            <td>{{ $value->checked_price }}</td>
-            <td>
+		<?php if ($value->id != 1): ?>
+			<tr>
+					<td>{{ $i }}</td>
+					<td>{{ $value->checked_name }}</td>
+					<td>{{ $value->checked_price }}</td>
+					<td>
 
-                <a class="btn btn-small btn-info" href="{{ URL::to('checkeds/' . $value->id . '/edit') }}">Edit</a>
-                {!! Form::open(array('url' => 'checkeds/' . $value->id, 'class' => 'pull-right')) !!}
-                    {!! Form::hidden('_method', 'DELETE') !!}
-                    {!! Form::submit(trans('Delete'), array('class' => 'btn btn-warning')) !!}
-                {!! Form::close() !!}
-            </td>
-        </tr><?php $i++; ?>
+							<a class="btn btn-small btn-info" href="{{ URL::to('checkeds/' . $value->id . '/edit') }}">Edit</a>
+							{!! Form::open(array('url' => 'checkeds/' . $value->id, 'class' => 'pull-right')) !!}
+									{!! Form::hidden('_method', 'DELETE') !!}
+									{!! Form::submit(trans('Delete'), array('class' => 'btn btn-warning')) !!}
+							{!! Form::close() !!}
+					</td>
+			</tr><?php $i++; ?>
+		<?php endif; ?>
     @endforeach
     </tbody>
 </table>

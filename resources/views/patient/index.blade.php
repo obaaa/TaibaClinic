@@ -67,7 +67,7 @@ function toggleDetail() {
                       </div>
 
                       <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-8">
                             <div class="form-group">
                                 <label>Address</label>
                                 <input type="text" name="patient_address" class="form-control border-input" placeholder="Home Address">
@@ -78,6 +78,18 @@ function toggleDetail() {
                                 <label>Birthday</label>
                                 <input type="date" name="patient_birthday" class="form-control border-input">
                             </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>categorie</label>
+                                <select name="categorie_id" class="form-control border-input" required>
+                                  <!-- <option selected disabled="true">-- select --</option> -->
+                                  <?php $categories = App\Categorie::all(); ?>
+                                  <?php foreach ($categories as $value): ?>
+                                    <option value="{{$value->id}}">{{$value->categorie_name}}</option>
+                                  <?php endforeach; ?>
+                                </select>
+                              </div>
                         </div>
                       </div>
 

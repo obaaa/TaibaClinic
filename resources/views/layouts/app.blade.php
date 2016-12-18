@@ -11,9 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }} Settings</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-
+    <link href="{{URL::asset('/css/app.css')}}" rel="stylesheet" />
+    <link href="{{URL::asset('/assets//css/font-awesome.min.css')}}" rel="stylesheet" />
 
     <!-- Scripts -->
     <script>
@@ -65,8 +64,10 @@
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
+                                <!-- <li>
+                                    <a href="{{ url('/') }}">Dashboard</a>
+                                </li> -->
                                 <li>
-                                    <a href="{{ url('/home') }}">Dashboard</a>
                                     <a href="{{ url('/logout') }}"
                                         onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
