@@ -44,7 +44,7 @@ class ReportController extends Controller
 
       return view('report.visit.index',compact('visits',$visits,'from_date',$from_date,'to_date',$to_date));
     }
-    // ------------------------------------------------------
+    // ------------------------------------------------------doctor
     public function doctor(Request $request)
     {
       $input = $request->all();
@@ -55,6 +55,18 @@ class ReportController extends Controller
       $visits = Visit::where('visit_date','>=',$from_date)->where('visit_date','<=',$to_date)->where('doctor_id','=',$doctor_id)->get();
 
       return view('report.doctor.index',compact('visits',$visits,'doctor_id',$doctor_id,'from_date',$from_date,'to_date',$to_date));
+    }
+    // ------------------------------------------------------doctor_paid
+    public function doctor_paid(Request $request)
+    {
+      $input = $request->all();
+      $from_date = Input::get('from_date');
+      $to_date = Input::get('to_date');
+      $doctor_id = Input::get('doctor_id');
+
+      $visits = Visit::where('visit_date','>=',$from_date)->where('visit_date','<=',$to_date)->where('doctor_id','=',$doctor_id)->get();
+
+      return view('report.doctor_paid.index',compact('visits',$visits,'doctor_id',$doctor_id,'from_date',$from_date,'to_date',$to_date));
     }
     // ------------------------------------------------------
     public function visit_by_categorie(Request $request)

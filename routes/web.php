@@ -62,6 +62,8 @@ Route::POST("report/visit_by_categorie", "ReportController@visit_by_categorie");
 
 Route::POST("report/doctor", "ReportController@doctor");
 
+Route::POST("report/doctor_paid", "ReportController@doctor_paid");
+
 Route::POST("report/expense", "ReportController@expense");
 
 Route::POST("visit/print", "ReportController@report_print");
